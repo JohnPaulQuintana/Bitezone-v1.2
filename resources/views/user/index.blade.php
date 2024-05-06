@@ -13,7 +13,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100 flex flex-wrap">
                     <span class="text-red-700 font-bold">W</span>elcome to <span class="text-red-700 font-bold ml-1">BITEZONE</span> !.
-                    <span class="pl-2">{{ Auth::user()->name }}</span>
+                    <span class="pl-2">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
 
                     @if (empty($location))
                         <div id="locationSetupPopup">

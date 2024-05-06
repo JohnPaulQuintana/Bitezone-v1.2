@@ -71,7 +71,7 @@
                 <li class="has-submenu">
                     <li><a href="{{ route('login') }}">Login</a></li>
                 </li>
-                <li><a class="border border-white" href="{{ route('register') }}">Apply Now</a></li>
+                <li><a class="border border-white" href="{{ route('register') }}">Consult Now</a></li>
             </ul>
         </nav>
     </header>
@@ -91,7 +91,7 @@
                 <h6 class="font-bold text-xl md:text-2xl text-white mt-3">for the</h6>
                 <h2 class="mt-1 font-bold text-center text-4xl md:text-6xl text-red-600 uppercase not-italic">Anti-Rabies Program</h2>
                 <div class="main-button mt-3">
-                    <div class="scroll-to-section"><a class="b-r hover:cursor-pointer hover:bg-red-800">Program Details</a></div>
+                    <div class="scroll-to-section"><a class="b-r hover:cursor-pointer hover:bg-red-800">Login as Guest</a></div>
                 </div>
             </div>
             <div class="flex justify-center items-center">

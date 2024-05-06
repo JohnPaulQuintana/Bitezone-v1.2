@@ -18,14 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/reset', [ProfileController::class, 'reset'])->name('profile.reset');
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -40,6 +41,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('location', [\App\Http\Controllers\User\UserController::class, 'setLocation'])->name('location');
         Route::get('record', [\App\Http\Controllers\User\UserController::class, 'record'])->name('record');
         Route::get('clinic', [\App\Http\Controllers\User\UserController::class, 'clinic'])->name('clinic');
+        Route::post('send', [\App\Http\Controllers\User\UserController::class, 'send'])->name('send');
+        Route::get('edit/{id}', [\App\Http\Controllers\User\UserController::class, 'edit'])->name('edit');
+        Route::post('update', [\App\Http\Controllers\User\UserController::class, 'update'])->name('update');
     });
 });
 

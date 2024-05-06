@@ -7,7 +7,7 @@
         <div>
           
             <div class="border">
-                <div id="map" style="height: 600px;"></div>
+                <div id="map" style="height: 300px;"></div>
             </div>
 
             <div class="hidden">

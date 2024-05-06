@@ -90,7 +90,7 @@
 
                     <!-- Dropdown Start -->
                     <div x-show="dropdownOpen"
-                        class="absolute -right-27 mt-2.5 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80">
+                        class="z-20 absolute -right-27 mt-2.5 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80">
                         <div class="px-4.5 py-3">
                             <h5 class="text-sm font-medium text-bodydark2">Notification</h5>
                         </div>
@@ -155,14 +155,21 @@
             <!-- User Area -->
             <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
                 <a class="flex items-center gap-4" href="#" @click.prevent="dropdownOpen = ! dropdownOpen">
-                    <span class="hidden text-right lg:block">
-                        <span class="block text-sm font-medium text-black dark:text-white">{{ Auth::user()->name }}</span>
-                    </span>
+                    
 
                     <span class="rounded-full">
-                      <i class="fa-duotone fa-user text-3xl"></i>
+                      
+                      @if (empty(Auth::user()->profile))
+                        <i class="fa-duotone fa-user text-3xl"></i>
+                      @else
+                        <img class="w-7" src="{{ asset('storage').'/'.Auth::user()->profile }}" alt="Logo">
+                      @endif
                     </span>
 
+                    <span class="hidden text-right lg:block">
+                        <span class="block text-sm font-medium text-black dark:text-white">{{ Auth::user()->firstname }}</span>
+                    </span>
+                    
                     <svg :class="dropdownOpen && 'rotate-180'" class="hidden fill-current sm:block" width="12"
                         height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
