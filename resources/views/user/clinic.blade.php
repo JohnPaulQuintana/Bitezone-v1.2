@@ -10,7 +10,7 @@
             @include('partials.breadcrum', ['section'=>'Clinic'])
         </div>
         <div class="max-w-12xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-2">
                 <div class="p-6 text-gray-900 dark:text-gray-100 flex flex-wrap">
                     <div class=""><span class="text-red-700 font-bold">A</span>vailable  <span class="ml-1"><span class="text-red-700 font-bold">C</span>linic's</span>.</div>
                     
@@ -85,7 +85,7 @@
 
                 // console.log(`Distances array:`, distances);
                 const baseUrl = window.location.origin;//extract the base url
-                let images = ['profiles/r8WEH4m9mWfGU7adODAoTIBHeRTi0Nua1UL5DkrZ.png','profiles/r8WEH4m9mWfGU7adODAoTIBHeRTi0Nua1UL5DkrZ.png','profiles/r8WEH4m9mWfGU7adODAoTIBHeRTi0Nua1UL5DkrZ.png','profiles/r8WEH4m9mWfGU7adODAoTIBHeRTi0Nua1UL5DkrZ.png','profiles/r8WEH4m9mWfGU7adODAoTIBHeRTi0Nua1UL5DkrZ.png' ]
+                let images = ['profiles/4aK4MxODvjSdZTPQxav2DX2QYg2C4WJmlavtjK7n.png','profiles/4aK4MxODvjSdZTPQxav2DX2QYg2C4WJmlavtjK7n.png','profiles/4aK4MxODvjSdZTPQxav2DX2QYg2C4WJmlavtjK7n.png','profiles/4aK4MxODvjSdZTPQxav2DX2QYg2C4WJmlavtjK7n.png','profiles/4aK4MxODvjSdZTPQxav2DX2QYg2C4WJmlavtjK7n.png' ]
                 let len = coords.length
                 
                 for (let index = 0; index < len; index++) {

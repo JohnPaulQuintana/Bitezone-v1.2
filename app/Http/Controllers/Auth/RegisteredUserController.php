@@ -41,6 +41,17 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $role = 0;
+        switch ($request->p) {
+            case 'physician':
+                $role = 1;
+                break;
+            
+            default:
+                $role = 0;
+                break;
+        }
+
         $user = User::create([
             'firstname' => $request->firstname,
             'middlename' => $request->middlename,
@@ -51,6 +62,7 @@ class RegisteredUserController extends Controller
             'address' => $request->address,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'isAdmin' => $role,
         ]);
 
         event(new Registered($user));

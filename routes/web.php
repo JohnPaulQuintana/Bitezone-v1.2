@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'admin','middleware' => 'is_admin','as' => 'admin.'], function () {
         Route::get('dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
+        Route::post('clinic-setup', [\App\Http\Controllers\Admin\AdminController::class, 'setup'])->name('setup');
 
     });
 

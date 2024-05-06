@@ -78,8 +78,11 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
     @yield('scripts')
     <script>
         $(document).ready(function() {
-            // Check if the location setup popup is visible
-            if ($('#locationSetupPopup').is(':visible')) {
+            // Check if either locationContainer or clinicContainer is visible
+            if ($('#locationContainer, #clinicContainer').is(':visible')) {
+                // Determine the type based on which container is visible
+                let type = ($('#locationContainer').is(':visible')) ? $('#locationContainer').data('id') : $('#clinicContainer').data('id');
+
                 // Popup is visible
                 console.log('Location setup popup is visible');
                 // Set up the map after obtaining location
