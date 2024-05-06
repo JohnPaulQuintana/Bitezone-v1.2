@@ -54,8 +54,8 @@
     @section('scripts')
         <script>
             $(document).ready(function() {
-
-                console.log('connected')
+                if (!$('#locationContainer, #clinicContainer').is(':visible')) {
+                    console.log('connected')
                 let clinicElements = []
                 //get the render clinic elements
                 $('.clinic').each(function(index, element) {
@@ -123,6 +123,8 @@
                         map.flyTo(coords[index], 19)
                     })
                 }
+                }
+                
                 
             })
         </script>
