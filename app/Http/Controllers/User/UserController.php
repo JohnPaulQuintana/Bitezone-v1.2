@@ -34,7 +34,7 @@ class UserController extends Controller
         ) // Select the columns you need from both tables
         ->where('consultations.user_id', auth()->id())
         ->orderByDesc('consultations.created_at')
-        ->get();
+        ->paginate(1);
         // dd($records);
         return view('user.record', compact("location", "records"));
     }

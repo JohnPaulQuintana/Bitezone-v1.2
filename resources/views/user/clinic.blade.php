@@ -10,7 +10,7 @@
             @include('partials.breadcrum', ['section' => 'Clinic'])
         </div>
         <div class="max-w-12xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-2">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-2 h-full">
                 <div class="p-6 text-gray-900 dark:text-gray-100 flex flex-wrap">
                     <div class=""><span class="text-red-700 font-bold">A</span>vailable <span class="ml-1"><span
                                 class="text-red-700 font-bold">C</span>linic's</span>.</div>
@@ -20,7 +20,7 @@
                 {{-- record table here --}}
                 <div class="grid grid-cols-1 gap-1 md:grid-cols-2 pl-6">
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-[450px]">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-[450px] relative">
                         {{-- {{ $clinicLocation }} --}}
                         @foreach ($clinicLocation as $clinic)
                             <div
@@ -57,6 +57,7 @@
                                 </div>
                             </div>
                         @endforeach
+                        
                         {{-- @for ($i = 1; $i <= 5; $i++)
                             @if ($i === 5)
                                 <div
@@ -74,9 +75,11 @@
                                 </div>
                             @endif
                         @endfor --}}
-
+                        {{-- <div class="col-span-2 absolute bottom-0">
+                            {{ $clinicLocation->links() }}
+                        </div> --}}
                     </div>
-                    <div id="map" style="width: 100%; height: 400px;" class=""></div>
+                    <div id="map" style="width: 100%; height: 500px;" class=""></div>
                 </div>
 
                 @if (empty($location))

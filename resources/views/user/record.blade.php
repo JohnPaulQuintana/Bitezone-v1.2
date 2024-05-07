@@ -134,10 +134,11 @@
                                     </tr>
                                 @endforeach
                                 
-                                {{-- {{ $records->links() }} --}}
+                                
                                 
                             </tbody>
                         </table>
+                        {{ $records->links() }}
                     </div>
 
                     @if (empty($location))
