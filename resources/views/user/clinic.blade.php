@@ -18,24 +18,24 @@
                 </div>
 
                 {{-- record table here --}}
-                <div class="grid grid-cols-1 gap-2 md:grid-cols-2 pl-6">
+                <div class="grid grid-cols-1 gap-1 md:grid-cols-2 pl-6">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {{-- {{ $clinicLocation }} --}}
                         @foreach ($clinicLocation as $clinic)
                             <div
-                                class="clinic shadow p-2 w-[250px] h-fit grid grid-cols-1 md:grid-cols-2 gap-2 rounded-md hover:cursor-pointer hover:opacity-50">
+                                class="clinic shadow border-l-4 p-2 w-[300px] h-fit grid grid-cols-1 md:grid-cols-2 gap-2 rounded-md hover:cursor-pointer hover:opacity-50">
                                 <img src="{{ asset('storage') . '/' . $clinic->clinic->profile }}" alt=""
                                     class="w-[200px] h-[100px] rounded-md">
                                 
                                 <div class="">
                                     <span class="text-sm font-bold">{{ $clinic->clinic->name }}</span>
-                                    <div class="rounded-sm text-[12px] flex flex-wrap gap-2">
-                                        <div class="shadow text-blue-500">
+                                    <div class="rounded-sm text-[12px] grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        <div class="shadow text-blue-500 text-center">
                                             <span>Open</span>
                                             <span class="block -mt-2">{{ \Carbon\Carbon::parse($clinic->clinic->open)->format('g:i A') }}</span>
                                         </div>
-                                        <div class="shadow text-red-500">
+                                        <div class="shadow text-red-500 text-center">
                                             <span>Closed</span>
                                             <span class="block -mt-2">{{ \Carbon\Carbon::parse($clinic->clinic->closed)->format('g:i A') }}</span>
                                         </div>
@@ -89,7 +89,7 @@
         <script>
             $(document).ready(function() {
                 if (!$('#locationContainer, #clinicContainer').is(':visible')) {
-                    console.log('connected')
+                    // console.log('connected')
 
                     $clinicInformation = @json($clinicLocation);
                     $mylocation = @json($location);
@@ -114,7 +114,7 @@
                     let names = [] //stored labels for all registered clinic
                  
                     $clinicInformation.forEach(coord => {
-                        console.log(coord.clinic)
+                        // console.log(coord.clinic)
                         coords.push([parseFloat(coord.lat), parseFloat(coord.long)])
                         images.push(coord.clinic.profile);
                         names.push(coord.clinic.name)
@@ -125,7 +125,7 @@
                     names.push(`${$mylocation.user.firstname} ${$mylocation.user.lastname}`);
                     
                 
-                    console.log(coords)
+                    // console.log(coords)
 
                     // coords = [
                     //     [14.56103, 120.59476],
@@ -135,7 +135,7 @@
                     //     [14.56422, 120.59657]
                     // ]
                     const startPoint = L.latLng(coords[coords.length - 1]); // Last coordinate as starting point
-                    console.log(startPoint)
+                    // console.log(startPoint)
                     // console.log(startPoint)
                     // let totalDistance = 0;
                     let distances = [];
@@ -183,7 +183,7 @@
                         
 
                         if (startPointNotEmpty) {
-                            console.log('yes')
+                            // console.log('yes')
                             content += `
                             <div class="flex flex-col">
                                 <span class="text-sm font-bold text-blue-500">My location</span>
