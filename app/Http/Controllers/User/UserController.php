@@ -28,8 +28,11 @@ class UserController extends Controller
     }
     // clinic
     public function clinic(){
-        $location = Location::where('user_id',auth()->user()->id)->first();
-        return view('user.clinic', compact("location"));
+        $location = Location::where('user_id',auth()->user()->id)->with(['user'])->first();
+        // dd($location);
+        $clinicLocation = Location::where('isDefined',true)->with('clinic')->get();
+        // dd($clinicLocation);
+        return view('user.clinic', compact("location", "clinicLocation"));
     }
     
     // store location of the user

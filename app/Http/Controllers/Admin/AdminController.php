@@ -39,7 +39,7 @@ class AdminController extends Controller
             //     // If you want to delete the old profile picture, you can uncomment the line below
             //     Storage::disk('public')->delete($user->profile);
             // }
-            $location = Location::create(['user_id'=>auth()->user()->id, 'lat'=>$validateInfo['lat'], 'long'=>$validateInfo['long']]);
+            $location = Location::create(['user_id'=>auth()->user()->id, 'lat'=>$validateInfo['lat'], 'long'=>$validateInfo['long'], 'isDefined'=>true]);
             
             ClinicInformation::create([
                 'location_id'=>$location->id,
