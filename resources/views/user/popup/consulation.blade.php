@@ -1,4 +1,4 @@
-<div id="consultationContainer" class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 hidden">
+<div id="consultationContainer" class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-99999 hidden">
     <div class="bg-white p-8 rounded shadow-md">
         <div class="flex justify-between items-center">
             <h2 class="text-2xl font-bold mb-4"><span class="text-red-700">V</span>accine <span class="text-red-700">C</span>onsultation</h2>
@@ -11,6 +11,9 @@
             <form class="max-w-full mx-auto">
                 <span class="font-bold"><span class="text-[20px]">B</span>asic <span class="text-[20px]">I</span>nformation</span>
                 <div class="border border-slate-100 shadow p-2 grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
+                    <div class="hidden">
+                        <input type="number" id="user_id" value="">
+                    </div>
                     <div>
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                         <div class="relative">

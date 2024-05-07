@@ -20,7 +20,7 @@
                 {{-- record table here --}}
                 <div class="grid grid-cols-1 gap-1 md:grid-cols-2 pl-6">
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-[450px]">
                         {{-- {{ $clinicLocation }} --}}
                         @foreach ($clinicLocation as $clinic)
                             <div
@@ -39,6 +39,9 @@
                                             <span>Closed</span>
                                             <span class="block -mt-2">{{ \Carbon\Carbon::parse($clinic->clinic->closed)->format('g:i A') }}</span>
                                         </div>
+                                        <div class="shadow text-green-500 text-center col-span-2">
+                                            <span>Status: <span class="">active</span></span>
+                                        </div>
                                     </div>
                                     
                                 </div>
@@ -47,6 +50,7 @@
                                     $daysOfWeek = json_decode($clinic->clinic->days_of_week);
                                 @endphp
                                 <div class="col-span-2 grid grid-cols-7 gap-1 text-[12px] text-center border-t-2 items-center justify-center capitalize">
+                                    <span class="col-span-7">Weekdays Open</span>
                                     @foreach ($daysOfWeek as $day)
                                         <span class="px-1 py-1 bg-gray-200 rounded shadow">{{ substr($day, 0, 3) }}</span>
                                     @endforeach
@@ -72,7 +76,7 @@
                         @endfor --}}
 
                     </div>
-                    <div id="map" style="width: 600px; height: 400px;" class=""></div>
+                    <div id="map" style="width: 100%; height: 400px;" class=""></div>
                 </div>
 
                 @if (empty($location))
@@ -85,6 +89,8 @@
         </div>
     </div>
 
+    @include('user.popup.consulation')
+
     @section('scripts')
         <script>
             $(document).ready(function() {
@@ -96,13 +102,13 @@
                     // console.log($mylocation)
                     let clinicElements = []
                     //get the render clinic elements
-                    $('.clinic').each(function(index, element) {
-                        clinicElements.push(element)
-                    });
+                    // $('.clinic').each(function(index, element) {
+                    //     clinicElements.push(element)
+                    // });
 
-                    clinicElements.push($('.me'))
+                    // clinicElements.push($('.me'))
 
-                    const map = L.map('map').setView([$mylocation.lat, $mylocation.long], 15);
+                    const map = L.map('map').setView([$mylocation.lat, $mylocation.long], 15.5);
 
                     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
@@ -114,18 +120,19 @@
                     let names = [] //stored labels for all registered clinic
                  
                     $clinicInformation.forEach(coord => {
-                        // console.log(coord.clinic)
+                        // console.log(coord.user_id)
                         coords.push([parseFloat(coord.lat), parseFloat(coord.long)])
                         images.push(coord.clinic.profile);
-                        names.push(coord.clinic.name)
+                        names.push([{label:coord.clinic.name}, {userId: coord.user_id}])
                     });
 
                     coords.push([parseFloat($mylocation.lat), parseFloat($mylocation.long), {type:"starting-point"}])
                     images.push($mylocation.user.profile);
-                    names.push(`${$mylocation.user.firstname} ${$mylocation.user.lastname}`);
+                    names.push([{label:`${$mylocation.user.firstname} ${$mylocation.user.lastname}`}, {userId:$mylocation.user_id}]);
+                    
                     
                 
-                    // console.log(coords)
+                    console.log(names)
 
                     // coords = [
                     //     [14.56103, 120.59476],
@@ -172,8 +179,8 @@
                         var pop = L.popup({
                             closeOnClick: true
                         }).setContent(`<div class="flex flex-col"><img src="${baseUrl}/storage/${images[index]}"/>
-                                    <span>${names[index]}</span>
-                                    <button class="mt-1 bg-red-500 p-1 rounded-md text-white ${btnShow}" href="#">Consult now</button>
+                                        <span>${names[index][0].label}</span>
+                                        <button onclick="triggerConsultation(${names[index][1].userId})" class="mt-1 bg-red-500 p-1 rounded-md text-white hover:cursor-pointer hover:bg-red-700 consultationBtn ${btnShow}" >Consult now</button>
                                     </div>`)
 
                         var marker = L.marker(coords[index]).addTo(map).bindPopup(pop);
@@ -191,7 +198,7 @@
                         } else {
                             content += `
                             <div class="flex flex-col">
-                                <span class="text-sm font-bold text-red-500">${names[index]}</span><span class="text-red-500 text-[10px]">Distance: ${distances[index].toFixed(2)} meters</span>
+                                <span class="text-sm font-bold">${names[index][0].label}</span><span class="text-red-500 text-[10px]">Distance: ${distances[index].toFixed(2)} meters</span>
                             </div>`
                         }
                         var toollip = L.tooltip({
@@ -201,13 +208,136 @@
                         marker.bindTooltip(toollip);
 
                         //zoom in / fly to when hovering the clinic
-                        clinicElements[index].addEventListener("click", () => {
-                            map.flyTo(coords[index], 19)
+                        // console.log(clinicElements)
+                        $('.clinic').each(function(index, element) {
+                            // Add click event listener to each clinic element
+                            $(element).click(function() {
+                                // Trigger map flyTo action using coords[index]
+                                map.flyTo(coords[index], 19);
+                            });
+                        });
+
+                        window.triggerConsultation = (id) => {
+                            // alert(id)
+                            $('#user_id').val(id)
+                            $('#consultationContainer').removeClass('hidden')
+                        }
+                    
+                        $('#consultationClose').click(function(){
+                            $('#consultationContainer').addClass('hidden')
                         })
+
+                        // Unbind any existing click event handlers before binding a new one
+                        $(document).off('click', '#locationBtn').on('click', '#locationBtn', function() {
+                            let userId = $('#user_id').val();
+                            let message = $('#message').val();
+                            let requestData = {user_id:userId,message:message}
+                            // console.log(requestData)
+                            sendRequest('POST', '/user/send', requestData)
+                                .then(function(response) {
+                                    // Handle successful response
+                                    console.log(response);
+                                    sweetAlertSuccess(response.status, response.message)
+                                })
+                                .catch(function(error) {
+                                    // Handle error
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: "We encounter an error!",
+                                        html: `<span>The data you provided is invalid.</span>`,
+                                        showClass: {
+                                            popup: `
+                                        animate__animated
+                                        animate__fadeInUp
+                                        animate__faster
+                                        `
+                                        },
+                                        hideClass: {
+                                            popup: `
+                                        animate__animated
+                                        animate__fadeOutDown
+                                        animate__faster
+                                        `
+                                        },
+                                        didOpen: () => {
+                                            
+                                            const data = Swal.getPopup().querySelector("b");
+                                            console.log(error.errors)
+                                            // timerInterval = setInterval(() => {
+                                            //     timer.textContent = `${Swal.getTimerLeft()}`;
+                                            // }, 100);
+                                        },
+                                    });
+
+                                    console.log(error)
+                                });
+                        })
+
+                        //dynamic request
+                        function sendRequest(method, url, data = {}) {
+                            return new Promise(function(resolve, reject) {
+                                // Get the CSRF token from the meta tag
+                                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+                                // Add the CSRF token to the data object
+                                data._token = csrfToken;
+
+                                $.ajax({
+                                    method: method,
+                                    url: url,
+                                    data: data,
+                                    headers: {
+                                        'X-CSRF-TOKEN': csrfToken // Include CSRF token in the request headers
+                                    },
+                                    success: function(response) {
+                                        resolve(response);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        reject(error);
+                                    }
+                                });
+                            });
+                        }
+
+                        //popups
+                        function sweetAlertSuccess(status, message) {
+                            let timerInterval;
+                            Swal.fire({
+                                title: "Sent successfully!",
+                                html: `<span>${message}</span><span class="block"><b></b></span>`,
+                                text: message,
+                                icon: status,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: () => {
+                                    $('#consultationContainer').addClass('hidden')
+                                    Swal.showLoading();
+                                    const timer = Swal.getPopup().querySelector("b");
+                                    timerInterval = setInterval(() => {
+                                        timer.textContent = `${Swal.getTimerLeft()}`;
+                                    }, 100);
+                                },
+                                willClose: () => {
+                                    clearInterval(timerInterval);
+                                }
+                            }).then((result) => {
+                                if (result.dismiss === Swal.DismissReason.timer) {
+                                    console.log("I was closed by the timer");
+                                    window.location.reload();
+                                }
+                            });
+                        }
                     }
+
+                    // $(document).on('click','.consultationBtn',function(){
+                    //     alert('yes')
+                    //     // $('#consultationContainer').removeClass('hidden')
+                    // })
+
+                    
                 }
 
-
+                
             })
         </script>
     @endsection
