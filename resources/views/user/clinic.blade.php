@@ -11,20 +11,40 @@
         </div>
         <div class="max-w-12xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-2 h-full">
-                <div class="p-6 text-gray-900 dark:text-gray-100 flex flex-wrap">
-                    <div class=""><span class="text-red-700 font-bold">A</span>vailable <span class="ml-1"><span
-                                class="text-red-700 font-bold">C</span>linic's</span>.</div>
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="flex flex-row justify-between items-center">
+                        <div>
+                            <span class="text-red-700 font-bold">A</span>vailable <span class="ml-1"><span
+                            class="text-red-700 font-bold">C</span>linic's</span>.
+                        </div>
+                        <div>
+                            
+                            <form class="max-w-md mx-auto">   
+                                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                        </svg>
+                                    </div>
+                                    <input type="search" id="search-clinic" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Clinic's" required />
+                                    
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
 
                 </div>
 
                 {{-- record table here --}}
                 <div class="grid grid-cols-1 gap-1 md:grid-cols-2 pl-6">
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-[450px] relative">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 h-[450px] overflow-auto mb-2 relative">
                         {{-- {{ $clinicLocation }} --}}
                         @foreach ($clinicLocation as $clinic)
-                            <div
-                                class="clinic shadow border-l-4 p-2 w-[300px] h-fit grid grid-cols-1 md:grid-cols-2 gap-2 rounded-md hover:cursor-pointer hover:opacity-50">
+                            <div data-name="{{ $clinic->clinic->name }}"
+                                class="clinic shadow border-l-4 p-2 w-full md:w-[300px] h-fit grid grid-cols-1 md:grid-cols-2 gap-2 rounded-md hover:cursor-pointer hover:opacity-50">
                                 <img src="{{ asset('storage') . '/' . $clinic->clinic->profile }}" alt=""
                                     class="w-[200px] h-[100px] rounded-md">
                                 
@@ -98,6 +118,24 @@
         <script>
             $(document).ready(function() {
                 if (!$('#locationContainer, #clinicContainer').is(':visible')) {
+
+                    $('#search-clinic').on('input', function() {
+                        var query = $(this).val().toLowerCase().trim(); // Get the search query
+
+                        // Iterate through each clinic card
+                        $('.clinic').each(function() {
+                            var clinicName = $(this).data('name').toLowerCase(); // Get the clinic's name
+                            var isVisible = clinicName.includes(query); // Check if the clinic's name matches the search query
+
+                            // Show or hide the clinic card based on the search result
+                            if (isVisible) {
+                                $(this).show();
+                            } else {
+                                $(this).hide();
+                            }
+                        });
+                    });
+
                     // console.log('connected')
 
                     $clinicInformation = @json($clinicLocation);

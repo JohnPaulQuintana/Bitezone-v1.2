@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.jqueryui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.jqueryui.css">
     <style>
-        select[name=rejected-table_length]:not([size]) {
+        /* select[name=rejected-table_length]:not([size]) {
             background-image: none;
         }
 
@@ -26,7 +26,29 @@
 
         select[name=department-table_length]:not([size]) {
             background-image: none;
+        } */
+
+        /* Hide the default scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #e46953;
+        }
+        
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2b302e;
+            cursor: pointer;
+        }
+
     </style>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
