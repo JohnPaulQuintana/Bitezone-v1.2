@@ -61,7 +61,7 @@
 
                     </ul> --}}
                 </li>
-                <li><a class="border" href="{{ route('register') }}">Consult Now</a></li>
+                <li><a class="border" href="{{ route('register') }}">Register Now</a></li>
             </ul>
         </nav>
     </header>

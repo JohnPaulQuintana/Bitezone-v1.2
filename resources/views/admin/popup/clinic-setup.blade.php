@@ -1,5 +1,5 @@
 <div id="clinicContainer" class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50" data-id="clinic">
-    <div class="bg-white p-8 rounded shadow-md">
+    <div class="bg-white p-8 rounded shadow-md max-h-[600px] overflow-auto">
         {{-- <span id="closePopupBtn" class="absolute top-0 right-0 mt-4 mr-4 text-gray-700 cursor-pointer">&times;</span> --}}
         <h2 class="text-2xl font-bold mb-4 capitalize text-center">Setup your clinic information</h2>
         <p class="text-gray-700 mb-4">To enhance your experience, please enable location sharing.</p>

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClinicInformation;
+use App\Models\Consultation;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Redis;
 
 class AdminController extends Controller
 {
@@ -54,5 +56,22 @@ class AdminController extends Controller
         }
 
         
+    }
+
+    // appointment
+    public function appointment(){
+        $location = Location::where('user_id',auth()->user()->id)->first();
+        $appointments = Consultation::with('user')
+            ->where('clinic_id',auth()->user()->id)
+            ->paginate(10);
+            // dd($appointments);
+        return view('admin.appointment', compact('location', 'appointments'));
+    }
+
+    //examination
+    public function examination(Request $request){
+        $location = Location::where('user_id',auth()->user()->id)->first();
+        $examination = Consultation::with('user')->where('id', $request->id)->first();
+        return view('admin.examination', compact('location', 'examination'));
     }
 }

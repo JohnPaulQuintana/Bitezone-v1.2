@@ -71,7 +71,7 @@
                 <li class="has-submenu">
                     <li><a href="{{ route('login') }}">Login</a></li>
                 </li>
-                <li><a class="border border-white" href="{{ route('register') }}">Consult Now</a></li>
+                <li><a class="border border-white" href="{{ route('register') }}">Register Now</a></li>
             </ul>
         </nav>
     </header>

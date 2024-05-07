@@ -38,13 +38,13 @@
                 </div>
 
                 {{-- record table here --}}
-                <div class="grid grid-cols-1 gap-1 md:grid-cols-2 pl-6">
+                <div class="grid grid-cols-1 gap-1 lg:grid-cols-3 pl-6">
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 h-[450px] overflow-auto mb-2 relative">
+                    <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full h-[500px] overflow-auto mb-2">
                         {{-- {{ $clinicLocation }} --}}
                         @foreach ($clinicLocation as $clinic)
                             <div data-name="{{ $clinic->clinic->name }}"
-                                class="clinic shadow border-l-4 p-2 w-full md:w-[300px] h-fit grid grid-cols-1 md:grid-cols-2 gap-2 rounded-md hover:cursor-pointer hover:opacity-50">
+                                class="clinic shadow border-l-4 p-2 w-full lg:w-[300px] h-fit grid grid-cols-1 lg:grid-cols-2 gap-2 mb-2 rounded-md hover:cursor-pointer hover:opacity-50">
                                 <img src="{{ asset('storage') . '/' . $clinic->clinic->profile }}" alt=""
                                     class="w-[200px] h-[100px] rounded-md">
                                 
@@ -99,7 +99,7 @@
                             {{ $clinicLocation->links() }}
                         </div> --}}
                     </div>
-                    <div id="map" style="width: 100%; height: 500px;" class=""></div>
+                    <div id="map" style="width: 100%; height: 500px;" class="col-span-2"></div>
                 </div>
 
                 @if (empty($location))
