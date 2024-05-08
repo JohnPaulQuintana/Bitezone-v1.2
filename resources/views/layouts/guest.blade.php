@@ -61,7 +61,7 @@
                     <img class="w-12 h-12" src="{{ asset('images/logo2.png') }}" alt="" srcset="">
                 @endif
                 
-                <em>BITEZONE</em>
+                <em>NEWZONE</em>
             </a>
         </div>
         <a class="menu-link hover:cursor-pointer"><i class="fa fa-bars"></i></a>
@@ -87,7 +87,7 @@
     <main class="flex items-center justify-center">
         <div class="video-overlay header-text grid grid-cols-1 md:grid-cols-2">
             <div class="flex flex-col justify-center items-center mt-29">
-                <h6 class="font-bold text-xl md:text-2xl text-white">Bitezone Application</h6>
+                <h6 class="font-bold text-xl md:text-2xl text-white">Newzone Application</h6>
                 <h6 class="font-bold text-xl md:text-2xl text-white mt-3">for the</h6>
                 <h2 class="mt-1 font-bold text-center text-4xl md:text-6xl text-red-600 uppercase not-italic">Anti-Rabies Program</h2>
                 <div class="main-button mt-3">

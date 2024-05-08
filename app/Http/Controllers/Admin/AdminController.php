@@ -67,6 +67,15 @@ class AdminController extends Controller
             // dd($appointments);
         return view('admin.appointment', compact('location', 'appointments'));
     }
+    // patient
+    public function patient(){
+        $location = Location::where('user_id',auth()->user()->id)->first();
+        // $appointments = Consultation::with('user')
+        //     ->where('clinic_id',auth()->user()->id)
+        //     ->paginate(10);
+            // dd($appointments);
+        return view('admin.patient', compact('location'));
+    }
 
     //examination
     public function examination(Request $request){

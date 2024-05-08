@@ -26,7 +26,7 @@
                         {{-- data here --}}
                         {{-- {{ $examination }} --}}
                         <div class="shadow py-2">
-                            <div class="uppercase font-bold">
+                            <div class="uppercase font-bold text-blue-900">
                                 <h1>animal Bite treatment consultation form</h1>
                             </div>
                             <div class="">
@@ -35,49 +35,49 @@
                                     @csrf
                                     
                                     <div class="grid grid-cols-1 bg-slate-100 p-1 md:grid-cols-3 lg:grid-cols-3 gap-2 mb-4">
-                                        <div class="col-span-3 text-center uppercase font-bold">
+                                        <div class="col-span-3 text-center uppercase font-bold text-blue-900">
                                             <h1>basic information</h1>
                                         </div>
                                         <div class="hidden">
-                                            <input type="number" name="patient_id" value="">
+                                            <input type="number" name="patient_id" value="{{ $examination->user_id }}">
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="lastname">Last Name</label>
-                                            <input type="text" name="lastname" class="rounded-md p-2 ps-2 border-0">
+                                            <input type="text" name="lastname" value="{{ $examination->user->lastname }}" class="rounded-md p-2 ps-2 border-0 uppercase font-bold">
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="middlename">Middle Name</label>
-                                            <input type="text" name="middlename" class="rounded-md p-2 ps-2 border-0">
+                                            <input type="text" name="middlename" value="{{ $examination->user->middlename }}" class="rounded-md p-2 ps-2 border-0 uppercase font-bold" readonly>
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="firstname">First Name</label>
-                                            <input type="text" name="lastname" class="rounded-md p-2 ps-2 border-0">
+                                            <input type="text" name="lastname" value="{{ $examination->user->firstname }}" class="rounded-md p-2 ps-2 border-0 uppercase font-bold" readonly>
                                         </div>
                                         
                                         <div class="col-span-3">
                                             <div class="grid grid-cols-3 gap-2 md:grid-cols-5 lg:grid-cols-5 ">
                                                 <div class="flex flex-col">
                                                     <label for="age">Age</label>
-                                                    <input type="number" name="age" class="rounded-md p-2 ps-2 border-0">
+                                                    <input type="number" name="age" value="<?php echo date('Y') - date('Y', strtotime($examination->user->dateofbirth)); ?>" class="rounded-md p-2 ps-2 border-0 uppercase font-bold" readonly>
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="gender">Gender</label>
-                                                    <select name="gender" class="rounded-md p-2 ps-2 border-0">
-                                                        <option value="">Male</option>
-                                                        <option value="">Female</option>
+                                                    <select name="gender" class="rounded-md p-2 ps-2 border-0 uppercase font-bold" readonly>
+                                                        <option value="">{{ $examination->user->gender }}</option>
+                                                        
                                                     </select>
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="date">Date</label>
-                                                    <input type="date" name="date" class="rounded-md p-2 ps-2 border-0">
+                                                    <input type="date" name="date" value="<?php echo date('Y-m-d', strtotime($examination->user->dateofbirth)); ?>" class="rounded-md p-2 ps-2 border-0 uppercase font-bold" readonly>
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="time">Time</label>
-                                                    <input type="time" name="time" class="rounded-md p-2 ps-2 border-0">
+                                                    <input type="time" name="time" value="<?php echo date('H:i:s', strtotime($examination->created_at)); ?>" class="rounded-md p-2 ps-2 border-0 uppercase font-bold" readonly>
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="record_number">Patient's Record Number</label>
-                                                    <input type="text" name="record_number" class="rounded-md p-2 ps-2 border-0">
+                                                    <input type="text" name="record_number" class="rounded-md p-2 ps-2 border-0 ">
                                                 </div>
                                             </div>
                                         </div>
@@ -86,7 +86,7 @@
                                             <div class="grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-3">
                                                 <div class="flex flex-col">
                                                     <label for="address">Address</label>
-                                                    <input type="text" name="address" class="rounded-md p-2 ps-2 border-0">
+                                                    <input type="text" name="address" value="{{ $examination->user->address }}" class="rounded-md p-2 ps-2 border-0 uppercase font-bold">
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="place_of_birth">Place of Birth</label>
@@ -94,7 +94,7 @@
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="contact_no">Contact Number</label>
-                                                    <input type="tel" name="contact_no" class="rounded-md p-2 ps-2 border-0">
+                                                    <input type="tel" name="contact_no" value="{{ $examination->user->contact_no }}" class="rounded-md p-2 ps-2 border-0 uppercase font-bold" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-3 lg:grid-cols-3 gap-2 mb-4">
 
                                         <div class="col-span-3 flex flex-col">
-                                            <div class="col-span-2 text-center uppercase font-bold">
+                                            <div class="col-span-2 text-center uppercase font-bold text-blue-900">
                                                 <h1>chief complain's</h1>
                                             </div>
                                             <input type="text" name="complain" class="rounded-md p-3 ps-2 border-0">
@@ -112,7 +112,7 @@
                                     </div>
 
                                     <div class="grid grid-cols-2 bg-slate-100  p-1 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
-                                        <div class="col-span-5 text-center uppercase font-bold">
+                                        <div class="col-span-5 text-center uppercase font-bold text-blue-900">
                                             <h1>vital sign's</h1>
                                         </div>
                                         <div class="flex flex-col">
@@ -139,7 +139,7 @@
                                     </div>
 
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
-                                        <div class="col-span-2 text-center uppercase font-bold">
+                                        <div class="col-span-2 text-center uppercase font-bold text-blue-900">
                                             <h1>doctor's order</h1>
                                         </div>
                                         <div class="col-span-2 flex flex-col">
@@ -262,13 +262,13 @@
                                         </div>
                                         <div class="col-span-2 flex flex-col justify-center items-center">
                                             
-                                            <input type="text" name="physician" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="physician" value="{{ auth()->user()->firstname  }} {{ auth()->user()->middlename  }} {{ auth()->user()->lastname  }}" class="rounded-md w-[25%] text-center p-3 ps-2 border-0 uppercase font-bold text-blue-900">
                                             <label for="physician">Physician</label>
                                         </div>
                                     </div>
 
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
-                                        <div class="col-span-2 text-center uppercase font-bold">
+                                        <div class="col-span-2 text-center uppercase font-bold text-blue-900">
                                             <h1>history of exposure</h1>
                                         </div>
                                         <div class="flex flex-col">
@@ -283,7 +283,7 @@
                                            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-2">
                                                 <div class="flex flex-col">
                                                     <label for="animal">Animal</label>
-                                                    <select name="animal" class="grid grid-cols-2 border-0 md:grid-cols-6 lg:grid-cols-6 items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                                    <select name="animal" class="grid grid-cols-2 border-0 md:grid-cols-6 lg:grid-cols-6 p-3 ps-2 items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                                                         <option value="">Select animal</option>
                                                         <option value="pet dog">Pet Dog</option>
                                                         <option value="pet cat">Pet Cat</option>
@@ -365,7 +365,7 @@
                                     </div>
 
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
-                                        <div class="col-span-2 text-center uppercase font-bold">
+                                        <div class="col-span-2 text-center uppercase font-bold text-blue-900">
                                             <h1>Schedule of vaccination</h1>
                                         </div>
                                         <div class="col-span-2 flex flex-col">
@@ -384,7 +384,7 @@
                                         <div class="col-span-2 flex flex-col">
                                             <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
                                                 <div class="col-span-5">
-                                                    <div class="text-center uppercase font-bold">
+                                                    <div class="text-center uppercase font-bold text-blue-900">
                                                         <h1>POST EXPOSURE</h1>
                                                     </div>
 
@@ -545,7 +545,7 @@
                                         <div class="col-span-2 flex flex-col">
                                             <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
                                                 <div class="col-span-5">
-                                                    <div class="text-center uppercase font-bold">
+                                                    <div class="text-center uppercase font-bold text-blue-900">
                                                         <h1>PRE-EXPOSURE</h1>
                                                     </div>
 

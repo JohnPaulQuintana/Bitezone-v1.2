@@ -47,7 +47,7 @@
         <div class="logo">
             <a href="#" class="flex items-center gap-2">
                 <img class="w-12 h-12" src="{{ asset('images/logo2.png') }}" alt="" srcset="">
-                <em>BITEZONE</em>
+                <em>NEWZONE</em>
             </a>
         </div>
         <a class="menu-link hover:cursor-pointer"><i class="fa fa-bars"></i></a>
@@ -75,7 +75,7 @@
 
         <div class="video-overlay header-text">
             <div class="caption">
-                <h6>Bitezone Application</h6>
+                <h6>Newzone Application</h6>
                 <h6 class="mt-3">for the</h6>
                 <h2 class="mt-0"><em>Anti-Rabies Program</em> </h2>
                 <div class="main-button">

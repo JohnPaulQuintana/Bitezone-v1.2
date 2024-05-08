@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin','middleware' => 'is_admin','as' => 'admin.'], function () {
         Route::get('dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
         Route::get('appointment', [\App\Http\Controllers\Admin\AdminController::class, 'appointment'])->name('appointment');
+        Route::get('patient', [\App\Http\Controllers\Admin\AdminController::class, 'patient'])->name('patient');
         Route::get('examination/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'examination'])->name('examination');
         Route::post('clinic-setup', [\App\Http\Controllers\Admin\AdminController::class, 'setup'])->name('setup');
 
