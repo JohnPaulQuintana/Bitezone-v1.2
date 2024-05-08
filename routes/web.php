@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('patient', [\App\Http\Controllers\Admin\AdminController::class, 'patient'])->name('patient');
         Route::get('examination/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'examination'])->name('examination');
         Route::post('clinic-setup', [\App\Http\Controllers\Admin\AdminController::class, 'setup'])->name('setup');
+        Route::post('treatment', [\App\Http\Controllers\Admin\AdminController::class, 'treatment'])->name('treatment');
+
 
     });
 

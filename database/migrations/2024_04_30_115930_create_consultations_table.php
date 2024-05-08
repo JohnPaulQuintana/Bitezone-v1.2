@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('clinic_id');
             $table->longText('consultation');
-            $table->integer('status')->default(0);//0=waiting,1=recieving,2=approved,3=rejected
+            $table->integer('status')->default(0);//0=waiting,1=recorded
             $table->timestamps();
         });
     }

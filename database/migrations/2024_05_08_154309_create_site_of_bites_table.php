@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('clinic_information', function (Blueprint $table) {
+        Schema::create('site_of_bites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('location_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->text('profile');
-            $table->string('name');
-            $table->time('open');
-            $table->time('closed');
-            $table->json('days_of_week');
+            $table->foreignId('treatment_id')->constrained()->onUpdate('cascade')->onDelete('cascade');//the treatment
+            $table->json('site_of_bite');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clinic_information');
+        Schema::dropIfExists('site_of_bites');
     }
 };

@@ -31,7 +31,7 @@
                             </div>
                             <div class="">
                                 
-                                <form action="#" method="post">
+                                <form action="{{ route('admin.treatment') }}" method="post">
                                     @csrf
                                     
                                     <div class="grid grid-cols-1 bg-slate-100 p-1 md:grid-cols-3 lg:grid-cols-3 gap-2 mb-4">
@@ -40,6 +40,7 @@
                                         </div>
                                         <div class="hidden">
                                             <input type="number" name="patient_id" value="{{ $examination->user_id }}">
+                                            <input type="number" name="consultation_id" value="{{ $examination->id }}">
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="lastname">Last Name</label>
@@ -51,7 +52,7 @@
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="firstname">First Name</label>
-                                            <input type="text" name="lastname" value="{{ $examination->user->firstname }}" class="rounded-md p-2 ps-2 border-0 uppercase font-bold" readonly>
+                                            <input type="text" name="firstname" value="{{ $examination->user->firstname }}" class="rounded-md p-2 ps-2 border-0 uppercase font-bold" readonly>
                                         </div>
                                         
                                         <div class="col-span-3">
@@ -63,7 +64,7 @@
                                                 <div class="flex flex-col">
                                                     <label for="gender">Gender</label>
                                                     <select name="gender" class="rounded-md p-2 ps-2 border-0 uppercase font-bold" readonly>
-                                                        <option value="">{{ $examination->user->gender }}</option>
+                                                        <option value="{{ $examination->user->gender }}">{{ $examination->user->gender }}</option>
                                                         
                                                     </select>
                                                 </div>
@@ -247,6 +248,10 @@
                                                 </li>
                                                 
                                             </ul>
+
+                                            @error('body_parts')
+                                                <span class="text-red-500">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="col-span-2 flex flex-col">
                                             <label for="pertinent_pe">Pertinent PE</label>
@@ -258,7 +263,7 @@
                                         </div>
                                         <div class="col-span-2 flex flex-col">
                                             <label for="home_medecine">Home Medicine</label>
-                                            <input type="text" name="diagnosis" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="home_medicine" class="rounded-md p-3 ps-2 border-0">
                                         </div>
                                         <div class="col-span-2 flex flex-col justify-center items-center">
                                             
@@ -373,14 +378,16 @@
                                                 
                                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                                     <div class="flex items-center ps-3">
-                                                        <input type="checkbox" name="schedule_of_vaccination[]" value="BOOSTER DOSE" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                                        <input type="checkbox" name="booster_dose" value="BOOSTER DOSE" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                                         <label class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">BOOSTER DOSE</label>
                                                     </div>
                                                 </li>
 
                                             </ul>
-                                        </div>
+                                        </div>            
+                                    </div>
 
+                                    <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
                                         <div class="col-span-2 flex flex-col">
                                             <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
                                                 <div class="col-span-5">
@@ -541,7 +548,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
+                                    <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
                                         <div class="col-span-2 flex flex-col">
                                             <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
                                                 <div class="col-span-5">
@@ -642,6 +651,12 @@
 
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
+                                        <div class="col-span-2">
+                                            <button type="submit" class="bg-red-500 hover:bg-red-700 rounded-md hover:cursor-pointer w-full p-2 text-white">Save Record's</button>
                                         </div>
                                     </div>
                                 </form>

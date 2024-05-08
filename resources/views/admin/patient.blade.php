@@ -86,7 +86,7 @@
                             </thead>
                             <tbody>
                                 
-                                
+                                {{ $patientRecords }}
                                 
                             </tbody>
                         </table>
