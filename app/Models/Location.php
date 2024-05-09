@@ -13,7 +13,7 @@ class Location extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'lat', 'long', 'isDefined'];
+    protected $fillable = ['user_id', 'lat', 'long', 'isDefined', 'address'];
 
     public function user() :BelongsTo{
         return $this->belongsTo(User::class);

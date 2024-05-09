@@ -38,8 +38,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('examination/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'examination'])->name('examination');
         Route::post('clinic-setup', [\App\Http\Controllers\Admin\AdminController::class, 'setup'])->name('setup');
         Route::post('treatment', [\App\Http\Controllers\Admin\AdminController::class, 'treatment'])->name('treatment');
-
-
+        Route::get('edit/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'treatmentEdit'])->name('treatment.edit');
+        Route::post('update', [\App\Http\Controllers\Admin\AdminController::class, 'treatmentUpdate'])->name('treatment.update');
+        Route::get('vaccination/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'vaccination'])->name('vaccination');
+        Route::post('vaccine', [\App\Http\Controllers\Admin\AdminController::class, 'vaccine'])->name('vaccine');
+        Route::get('open/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'open'])->name('open');
     });
 
     Route::group(['prefix' => 'user','as' => 'user.'], function () {

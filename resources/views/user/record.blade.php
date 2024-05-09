@@ -112,11 +112,9 @@
                                                         <div class="h-2.5 w-2.5 rounded-full bg-orange-400 me-2"></div> Waiting
                                                         @break
                                                     @case(1)
-                                                        <div class="h-2.5 w-2.5 rounded-full bg-orange-600 me-2"></div> Recieving
+                                                        <div class="h-2.5 w-2.5 rounded-full bg-green-600 me-2"></div> Recorded
                                                         @break
-                                                    @case(2)
-                                                        <div class="h-2.5 w-2.5 rounded-full bg-orange-600 me-2"></div> Completed
-                                                        @break
+                                                    
                                                     @default
                                                         <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> Cancelled
                                                         @break
@@ -128,8 +126,22 @@
                                             <?php echo date('Y-m-d H:i:s', strtotime($record->created_at)); ?>
                                         </td>
                                         <td class="px-6 py-4">
+
+                                            @switch($record->status )
+                                                    @case(0)
+                                                        <a href="{{ route('user.edit',  $record->id) }}" type="button" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                                        @break
+                                                    @case(1)
+                                                        <a href="#" type="button" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Open</a>
+                                                        @break
+                                                    
+                                                    @default
+                                                        <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> Cancelled
+                                                        @break
+                                                @endswitch
+
                                             <!-- Modal toggle -->
-                                            <a href="{{ route('user.edit',  $record->id) }}" type="button" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                            
                                         </td>
                                     </tr>
                                 @endforeach

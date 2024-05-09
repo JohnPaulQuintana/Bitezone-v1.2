@@ -52,12 +52,13 @@ class UserController extends Controller
         // dd($request);
 
         $validated = $request->validate([
+            'address' => "required",
             'lat' => "required",
             'long' => "required",
         ]);
 
         if($validated){
-           $location = Location::create(['user_id'=>Auth::user()->id, 'lat'=>$validated['lat'], 'long'=>$validated['long']]);
+           $location = Location::create(['user_id'=>Auth::user()->id, 'address'=>$validated['address'],'lat'=>$validated['lat'], 'long'=>$validated['long']]);
            // Optionally, return a response indicating success
             return response()->json(['status' => 'success','message' => 'Location enabled successfully', 'location' => $location], 201);
         }

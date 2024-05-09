@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Booster;
 use App\Models\Exposure;
+use App\Models\PostExposure;
+use App\Models\PreExposure;
 use App\Models\ScheduleOfVaccination;
 use App\Models\SiteOfBite;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -39,6 +44,10 @@ class Treatment extends Model
         "home_medicine",
     ];
 
+    public function user() :BelongsTo{
+        return $this->belongsTo(User::class);
+    }
+
     // has many siteOfBite
     public function bite() :HasOne{
         return $this->hasOne(SiteOfBite::class);
@@ -49,9 +58,18 @@ class Treatment extends Model
         return $this->hasOne(Exposure::class);
     }
 
-    // has one schedule
-    public function schedule() :HasOne{
-        return $this->hasOne(ScheduleOfVaccination::class);
-    }
+    
 
+    //has many post schedule
+    public function post_exposure() :HasMany{
+        return $this->hasMany(PostExposure::class);
+    }
+    //has many pre schedule
+    public function pre_exposure() :HasMany{
+        return $this->hasMany(PreExposure::class);
+    }
+    //has many pre schedule
+    public function booster() :HasOne{
+        return $this->hasOne(Booster::class);
+    }
 }

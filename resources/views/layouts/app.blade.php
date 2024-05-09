@@ -67,6 +67,9 @@
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.min.css" rel="stylesheet">
     @yield('links')
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
 </head>
 
 <body x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
@@ -80,7 +83,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
         @include('partials.sidebar')
 
         <!-- ===== Content Area Start ===== -->
-        <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+        <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden main">
             <!-- ===== Header Start ===== -->
             @include('partials.header')
             <!-- ===== Header End ===== -->
@@ -94,6 +97,8 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
@@ -137,29 +142,43 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
                     // Get coordinates of clicked location
                     var clickedLat = e.latlng.lat;
                     var clickedLng = e.latlng.lng;
+                    let address = ''
+                    // Use Leaflet's Geocoding API to reverse geocode the coordinates
+                    L.Control.Geocoder.nominatim().reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
+                        if (results.length > 0) {
+                            address = results[0].name;
+                            console.log(address);
+                            // Add marker and circle for clicked location
+                            marker = L.marker([clickedLat, clickedLng]).addTo(map)
+                                .bindPopup(`${address}`)
+                                .openPopup();
 
-                    // Add marker and circle for clicked location
-                    marker = L.marker([clickedLat, clickedLng]).addTo(map)
-                        .bindPopup('Clicked Location')
-                        .openPopup();
+                            circle = L.circle([clickedLat, clickedLng], {
+                                color: 'red',
+                                fillColor: 'red',
+                                fillOpacity: 0.2,
+                                radius: 100 // You can set your desired radius here
+                            }).addTo(map);
 
-                    circle = L.circle([clickedLat, clickedLng], {
-                        color: 'red',
-                        fillColor: 'red',
-                        fillOpacity: 0.2,
-                        radius: 100 // You can set your desired radius here
-                    }).addTo(map);
-
-                    $('#lat').val(clickedLat)
-                    $('#long').val(clickedLng)
+                            $('#lat').val(clickedLat)
+                            $('#addr').val(address)
+                            $('#long').val(clickedLng)
+                        } else {
+                            alert("No address found at this location.");
+                        }
+                    });
+                    
+                    
                 })
 
 
 
                 $('#locationBtn').click(function() {
+                    let sendAddress = $('#addr').val()
                     let sendLat = $('#lat').val()
                     let sendLong = $('#long').val()
                     let requestData = {
+                        address: sendAddress,
                         lat: sendLat,
                         long: sendLong
                     }

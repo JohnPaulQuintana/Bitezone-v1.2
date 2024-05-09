@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Consultation;
 use App\Models\Location;
+use App\Models\Treatment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -59,5 +60,8 @@ class User extends Authenticatable
     }
     public function consultation() :HasMany{
         return $this->hasMany(Consultation::class);
+    }
+    public function treatment() :HasOne{
+        return $this->hasOne(Treatment::class);
     }
 }

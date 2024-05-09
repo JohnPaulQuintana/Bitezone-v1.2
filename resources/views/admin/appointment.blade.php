@@ -112,11 +112,9 @@
                                                         <div class="h-2.5 w-2.5 rounded-full bg-orange-400 me-2"></div> Waiting
                                                         @break
                                                     @case(1)
-                                                        <div class="h-2.5 w-2.5 rounded-full bg-orange-600 me-2"></div> Recieving
+                                                        <div class="h-2.5 w-2.5 rounded-full bg-orange-600 me-2"></div> Recorded
                                                         @break
-                                                    @case(2)
-                                                        <div class="h-2.5 w-2.5 rounded-full bg-orange-600 me-2"></div> Completed
-                                                        @break
+                                                   
                                                     @default
                                                         <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> Cancelled
                                                         @break
@@ -143,7 +141,7 @@
 
                     @if (empty($location))
                         <div id="locationSetupPopup">
-                            @include('user.popup.location-setup')
+                            @include('admin.popup.clinic-setup')
                         </div>
                     @endif
                 </div>

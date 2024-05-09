@@ -33,9 +33,9 @@
                                 
                                 <form action="{{ route('admin.treatment') }}" method="post">
                                     @csrf
-                                    
+                                    {{-- basic information --}}
                                     <div class="grid grid-cols-1 bg-slate-100 p-1 md:grid-cols-3 lg:grid-cols-3 gap-2 mb-4">
-                                        <div class="col-span-3 text-center uppercase font-bold text-blue-900">
+                                        <div class="col-span-3 text-center uppercase font-bold text-white bg-red-500">
                                             <h1>basic information</h1>
                                         </div>
                                         <div class="hidden">
@@ -100,20 +100,20 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+                                    {{-- CHIEF COMPLAIN'S --}}
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-3 lg:grid-cols-3 gap-2 mb-4">
 
                                         <div class="col-span-3 flex flex-col">
-                                            <div class="col-span-2 text-center uppercase font-bold text-blue-900">
+                                            <div class="col-span-2 text-center uppercase font-bold text-white bg-red-500">
                                                 <h1>chief complain's</h1>
                                             </div>
                                             <input type="text" name="complain" class="rounded-md p-3 ps-2 border-0">
                                         </div>
 
                                     </div>
-
+                                    {{-- VITAL SIGN'S --}}
                                     <div class="grid grid-cols-2 bg-slate-100  p-1 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
-                                        <div class="col-span-5 text-center uppercase font-bold text-blue-900">
+                                        <div class="col-span-5 text-center uppercase font-bold text-white bg-red-500">
                                             <h1>vital sign's</h1>
                                         </div>
                                         <div class="flex flex-col">
@@ -138,9 +138,9 @@
                                         </div>
 
                                     </div>
-
+                                    {{-- DOCTOR'S ORDER --}}
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
-                                        <div class="col-span-2 text-center uppercase font-bold text-blue-900">
+                                        <div class="col-span-2 text-center uppercase font-bold text-white bg-red-500">
                                             <h1>doctor's order</h1>
                                         </div>
                                         <div class="col-span-2 flex flex-col">
@@ -271,277 +271,197 @@
                                             <label for="physician">Physician</label>
                                         </div>
                                     </div>
-
+                                    {{-- HISTORY OF EXPOSURE --}}
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
-                                        <div class="col-span-2 text-center uppercase font-bold text-blue-900">
+                                        <div class="col-span-2 text-center uppercase font-bold text-white bg-red-500 p-2">
                                             <h1>history of exposure</h1>
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="date_of_incidence">Date of Incidence</label>
-                                            <input type="text" name="date_of_incidence" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="date" name="date_of_incidence" value="{{ old('date_of_incidence') }}" class="rounded-md p-3 ps-2 border-0 @error('date_of_incidence') error @enderror">
+                                            @error('date_of_incidence')
+                                                <p class="text-red-500">Date of incidence field is required.</p>
+                                            @enderror
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="place_of_incidence">Place of Incidence</label>
-                                            <input type="text" name="place_of_incidence" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="place_of_incidence" value="{{ old('place_of_incidence') }}" class="rounded-md p-3 ps-2 border-0 @error('place_of_incidence') error @enderror">
+                                            @error('place_of_incidence')
+                                                <p class="text-red-500">Place of incidence field is required.</p>
+                                            @enderror
                                         </div>
                                         <div class="col-span-2 flex flex-col">
                                            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-2">
                                                 <div class="flex flex-col">
                                                     <label for="animal">Animal</label>
-                                                    <select name="animal" class="grid grid-cols-2 border-0 md:grid-cols-6 lg:grid-cols-6 p-3 ps-2 items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                                    <select name="animal" class="grid grid-cols-2 border-0 md:grid-cols-6 lg:grid-cols-6 p-3 ps-2 items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white @error('animal') error @enderror">
                                                         <option value="">Select animal</option>
-                                                        <option value="pet dog">Pet Dog</option>
-                                                        <option value="pet cat">Pet Cat</option>
-                                                        <option value="stray dog">Stray Dog</option>
-                                                        <option value="stray cat">Stray Cat</option>
-                                                        <option value="others">Others</option>
+                                                        <option value="pet dog" @if(old('animal')=='pet dog') selected @endif>Pet Dog</option>
+                                                        <option value="pet cat" @if(old('animal')=='pet cat') selected @endif>Pet Cat</option>
+                                                        <option value="stray dog" @if(old('animal')=='stray dog') selected @endif>Stray Dog</option>
+                                                        <option value="stray cat" @if(old('animal')=='stray cat') selected @endif>Stray Cat</option>
+                                                        <option value="others" @if(old('animal')=='others') selected @endif>Others</option>
                                                     </select>
+                                                    @error('animal')
+                                                        <p class="text-red-500">Animal type field is required.</p>
+                                                    @enderror
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="status_of_animal">Status of Animal</label>
-                                                    <input type="text" name="status_of_animal" class="rounded-md p-3 ps-2 border-0">
+                                                    <input type="text" name="status_of_animal" class="rounded-md p-3 ps-2 border-0" value="{{ old('status_of_animal') }}">
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="type_of_bite">Type of Bite</label>
-                                                    <select type="text" name="type_of_bite" class="rounded-md p-3 ps-2 border-0">
+                                                    <select type="text" name="type_of_bite" class="rounded-md p-3 ps-2 border-0 @error('type_of_bite') error @enderror">
                                                         <option value="">Select type of bite</option>
-                                                        <option value="bite">Bite</option>
-                                                        <option value="non-bite">Non Bite</option>
+                                                        <option value="bite" @if(old('type_of_bite')=='bite') selected @endif>Bite</option>
+                                                        <option value="non-bite" @if(old('type_of_bite')=='non-bite') selected @endif>Non Bite</option>
                                                     </select>
+                                                    @error('site_of_bite')
+                                                        <p class="text-red-500">Type of bite field is required.</p>
+                                                    @enderror
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="washing_of_bite">Washing of Bite</label>
-                                                    <input type="text" name="washing_of_bite" class="rounded-md p-3 ps-2 border-0">
+                                                    <input type="text" name="washing_of_bite" class="rounded-md p-3 ps-2 border-0" value="{{ old('washing_of_bite') }}">
+                                                    
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="site_of_bite">Site of Bite</label>
-                                                    <input type="text" name="site_of_bite" class="rounded-md p-3 ps-2 border-0">
+                                                    <input type="text" name="site_of_bite" class="rounded-md p-3 ps-2 border-0 @error('site_of_bite') error @enderror">
+                                                    @error('site_of_bite')
+                                                        <p class="text-red-500">Site of bite field is required.</p>
+                                                    @enderror
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="previous_vaccination_year">Previous Vaccination Year</label>
-                                                    <input type="number" name="previous_vaccination_year" class="rounded-md p-3 ps-2 border-0" min="1900" max="2099" placeholder="YYYY">
+                                                    <input type="date" name="previous_vaccination_year" value="{{ old('previous_vaccination_year') }}" class="rounded-md p-3 ps-2 border-0">
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="previous_vaccination_status">Previous Vaccination Status</label>
                                                     <select type="text" name="previous_vaccination_status" class="rounded-md p-3 ps-2 border-0">
                                                         <option value="">Select status</option>
-                                                        <option value="completed">Completed</option>
-                                                        <option value="incomplete">Incomplete</option>
+                                                        <option value="completed" @if(old('previous_vaccination_status')=='completed') selected @endif>Completed</option>
+                                                        <option value="incomplete" @if(old('previous_vaccination_status')=='incompleted') selected @endif>Incomplete</option>
                                                     </select>
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="tissue_culture_vaccine">Tissue Culture Vaccine</label>
                                                     <select type="text" name="tissue_culture_vaccine" class="rounded-md p-3 ps-2 border-0">
                                                         <option value="">Select here</option>
-                                                        <option value="pcev">PCEV</option>
-                                                        <option value="pvrv">PVRV</option>
-                                                        <option value="id">ID</option>
-                                                        <option value="im">IM</option>
+                                                        <option value="pcev" @if(old('tissue_culture_vaccine')=='pcev') selected @endif>PCEV</option>
+                                                        <option value="pvrv" @if(old('tissue_culture_vaccine')=='pvrv') selected @endif>PVRV</option>
+                                                        <option value="id" @if(old('tissue_culture_vaccine')=='id') selected @endif>ID</option>
+                                                        <option value="im" @if(old('tissue_culture_vaccine')=='im') selected @endif>IM</option>
                                                     </select>
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="rabies_immunoglobulin">Rabies Immunoglobulin</label>
                                                     <select type="text" name="rabies_immunoglobulin" class="rounded-md p-3 ps-2 border-0">
                                                         <option value="">Select here</option>
-                                                        <option value="equirab">EQUIRAB</option>
-                                                        <option value="ravirab">RAVBIRAB</option>
+                                                        <option value="equirab" @if(old('rabies_immunoglobulin')=='equirab') selected @endif>EQUIRAB</option>
+                                                        <option value="ravirab" @if(old('rabies_immunoglobulin')=='ravirab') selected @endif>RAVBIRAB</option>
                                                     </select>
-                                                </div>
+                                                </div>  
                                                 <div class="flex flex-col">
                                                     <label for="erig">ERIG</label>
-                                                    <input type="text" name="erig" class="rounded-md p-3 ps-2 border-0" min="1900" max="2099" placeholder="YYYY">
+                                                    <input type="text" name="erig" value="{{ old('erig') }}" class="rounded-md p-3 ps-2 border-0">
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="dose">DOSE (ml)</label>
-                                                    <input type="number" name="dose" class="rounded-md p-3 ps-2 border-0" min="1900" max="2099" placeholder="YYYY">
+                                                    <input type="number" name="dose" value="{{ old('dose') }}" class="rounded-md p-3 ps-2 border-0" min="1" max="2000" placeholder="YYYY">
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="anti_tetanus">Anti-Tetanus</label>
                                                     <select type="text" name="anti_tetanus" class="rounded-md p-3 ps-2 border-0">
                                                         <option value="">Select here</option>
-                                                        <option value="1,5000 u">1,500 u</option>
-                                                        <option value="5,000 u">5,000 u</option>
-                                                        <option value="6,000 u">6,000 u</option>
-                                                        <option value="TOXOID">TOXOID</option>
+                                                        <option value="1,5000 u" @if(old('anti_tetanus')=='1,5000 u') selected @endif>1,500 u</option>
+                                                        <option value="5,000 u" @if(old('anti_tetanus')=='5,000 u') selected @endif>5,000 u</option>
+                                                        <option value="6,000 u" @if(old('anti_tetanus')=='6,000 u') selected @endif>6,000 u</option>
+                                                        <option value="TOXOID" @if(old('anti_tetanus')=='TOXOID') selected @endif>TOXOID</option>
                                                     </select>
                                                 </div>
                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
-                                        <div class="col-span-2 text-center uppercase font-bold text-blue-900">
+                                    <div class="grid grid-cols-1 bg-red-500  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
+                                        <div class="col-span-2 text-center uppercase font-bold text-white">
                                             <h1>Schedule of vaccination</h1>
                                         </div>
-                                        <div class="col-span-2 flex flex-col">
-                                            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                                
-                                                <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
-                                                    <div class="flex items-center ps-3">
-                                                        <input type="checkbox" name="booster_dose" value="BOOSTER DOSE" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                                        <label class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">BOOSTER DOSE</label>
-                                                    </div>
-                                                </li>
-
-                                            </ul>
-                                        </div>            
+                                        
                                     </div>
 
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
                                         <div class="col-span-2 flex flex-col">
                                             <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
                                                 <div class="col-span-5">
-                                                    <div class="text-center uppercase font-bold text-blue-900">
-                                                        <h1>POST EXPOSURE</h1>
-                                                    </div>
-
-                                                    <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
-                                                        <div class="uppercase font-bold col-span-5">
-                                                            <h3>DAY 0</h3>
+                                                    
+                                                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 mb-4">
+                                                        <div class="flex flex-col">
+                                                            <label>Type</label>
+                                                            <select id="typeSelect" type="text" name="type" class="rounded-md p-3 ps-2 border-0">
+                                                                <option data-type="all" value="">Select Exposure</option>
+                                                                <option data-type="booster" value="BOOSTER DOSE" @if(old('type')=='BOOSTER DOSE') selected @endif>BOOSTER DOSE</option>
+                                                                <option data-type="post" value="POST EXPOSURE" @if(old('type')=='POST EXPOSURE') selected @endif>POST EXPOSURE</option>
+                                                                <option data-type="pre" value="PRE EXPOSURE" @if(old('type')=='PRE EXPOSURE') selected @endif>PRE EXPOSURE</option>
+                                                            </select>
+                                                            @error("type")
+                                                                <p class="text-red-500">{{ $message }}</p>
+                                                            @enderror
+                                                        </div>
+                                                        <div class="flex flex-col">
+                                                            <label>Day</label>
+                                                            <select id="daySelect" type="text" name="sday" class="rounded-md p-3 ps-2 border-0">
+                                                                <option value="">Select Days</option>
+                                                                <option data-type="default" value="0" @if(old('day')=='0') selected @endif>Day-0</option>
+                                                                <option data-type="post" value="3"  @if(old('day')=='3') selected @endif>Day-3</option>
+                                                                <option data-type="all" value="7"  @if(old('day')=='7') selected @endif>Day-7</option>
+                                                                <option data-type="post" value="14"  @if(old('day')=='14') selected @endif>Day-14</option>
+                                                                <option data-type="pre" value="21"  @if(old('day')=='21') selected @endif>Day-21</option>
+                                                                <option data-type="post" value="28" @if(old('day')=='28') selected @endif>Day-28</option>
+                                                            </select>
+                                                            @error("day")
+                                                                <p class="text-red-500">{{ $message }}</p>
+                                                            @enderror
                                                         </div>
                                                         <div class="flex flex-col">
                                                             <label>Date</label>
-                                                            <input type="date" name="post_date_of_day_zero" class="rounded-md p-3 ps-2 border-0" />
+                                                            <input type="date" name="sdate" class="rounded-md p-3 ps-2 border-0  @error('sdate') error @enderror" value="{{ old('sdate') }}" />
+                                                            @error("sdate")
+                                                                <p class="text-red-500">{{ $message }}</p>
+                                                            @enderror
                                                         </div>
                                                         <div class="flex flex-col">
                                                             <label>Time</label>
-                                                            <input type="time" name="post_time_of_day_zero" class="rounded-md p-3 ps-2 border-0" />
+                                                            <input type="time" name="stime" class="rounded-md p-3 ps-2 border-0  @error('stime') error @enderror" value="{{ old('stime') }}"/>
+                                                            @error("stime")
+                                                                <p class="text-red-500">{{ $message }}</p>
+                                                            @enderror
                                                         </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Site</label>
-                                                            <input type="text" name="post_site_of_day_zero" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
+                                                        
                                                         <div class="flex flex-col">
                                                             <label>R/L</label>
-                                                            <select type="text" name="post_r_or_l_zero" class="rounded-md p-3 ps-2 border-0">
+                                                            <select type="text" name="rl" class="rounded-md p-3 ps-2 border-0  @error('rl') error @enderror">
                                                                 <option value="">Right or Left</option>
-                                                                <option value="right">Right</option>
-                                                                <option value="left">Left</option>
+                                                                <option value="right" @if(old('rl') == 'right') selected @endif>Right</option>
+                                                                <option value="left" @if(old('rl') == 'left') selected @endif>Left</option>
                                                             </select>
+                                                            @error("rl")
+                                                                <p class="text-red-500">{{ $message }}</p>
+                                                            @enderror
                                                         </div>
                                                         <div class="flex flex-col">
                                                             <label>NOD</label>
-                                                            <input type="text" name="post_nod_zero" class="rounded-md p-3 ps-2 border-0" />
+                                                            <input type="text" name="nod" class="rounded-md p-3 ps-2 border-0" value="{{ old('nod') }}"/>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
-                                                        <div class="uppercase font-bold col-span-5">
-                                                            <h3>DAY 3</h3>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Date</label>
-                                                            <input type="date" name="post_date_of_day_three" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Time</label>
-                                                            <input type="time" name="post_time_of_day_three" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
+                                                        <div class="flex flex-col col-span-3">
                                                             <label>Site</label>
-                                                            <input type="text" name="post_site_of_day_three" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>R/L</label>
-                                                            <select type="text" name="post_r_or_l_three" class="rounded-md p-3 ps-2 border-0">
-                                                                <option value="">Right or Left</option>
-                                                                <option value="right">Right</option>
-                                                                <option value="left">Left</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>NOD</label>
-                                                            <input type="text" name="post_nod_three" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
-                                                        <div class="uppercase font-bold col-span-5">
-                                                            <h3>DAY 7</h3>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Date</label>
-                                                            <input type="date" name="post_date_of_day_seven" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Time</label>
-                                                            <input type="time" name="post_time_of_day_seven" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Site</label>
-                                                            <input type="text" name="post_site_of_day_seven" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>R/L</label>
-                                                            <select type="text" name="post_r_or_l_seven" class="rounded-md p-3 ps-2 border-0">
-                                                                <option value="">Right or Left</option>
-                                                                <option value="right">Right</option>
-                                                                <option value="left">Left</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>NOD</label>
-                                                            <input type="text" name="post_nod_seven" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
-                                                        <div class="uppercase font-bold col-span-5">
-                                                            <h3>DAY 14</h3>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Date</label>
-                                                            <input type="date" name="post_date_of_day_fourteen" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Time</label>
-                                                            <input type="time" name="post_time_of_day_fourteen" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Site</label>
-                                                            <input type="text" name="post_site_of_day_fourteen" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>R/L</label>
-                                                            <select type="text" name="post_r_or_l_fourteen" class="rounded-md p-3 ps-2 border-0">
-                                                                <option value="">Right or Left</option>
-                                                                <option value="right">Right</option>
-                                                                <option value="left">Left</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>NOD</label>
-                                                            <input type="text" name="post_nod_fourteen" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
-                                                        <div class="uppercase font-bold col-span-5">
-                                                            <h3>DAY 28</h3>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Date</label>
-                                                            <input type="date" name="post_date_of_day_twenty_eight" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Time</label>
-                                                            <input type="time" name="post_time_of_day_twenty_eight" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Site</label>
-                                                            <input type="text" name="post_site_of_day_twenty_eight" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>R/L</label>
-                                                            <select type="text" name="post_r_or_l_twenty_eight" class="rounded-md p-3 ps-2 border-0">
-                                                                <option value="">Right or Left</option>
-                                                                <option value="right">Right</option>
-                                                                <option value="left">Left</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>NOD</label>
-                                                            <input type="text" name="post_nod_twenty_eight" class="rounded-md p-3 ps-2 border-0" />
+                                                            <input type="text" name="site" class="rounded-md p-3 ps-2 border-0 @error('site') error @enderror" value="{{ old('site') }}"/>
+                                                            @error("site")
+                                                                <p class="text-red-500">{{ $message }}</p>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
@@ -550,109 +470,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
-                                        <div class="col-span-2 flex flex-col">
-                                            <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
-                                                <div class="col-span-5">
-                                                    <div class="text-center uppercase font-bold text-blue-900">
-                                                        <h1>PRE-EXPOSURE</h1>
-                                                    </div>
-
-                                                    <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
-                                                        <div class="uppercase font-bold col-span-5">
-                                                            <h3>DAY 0</h3>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Date</label>
-                                                            <input type="date" name="pre_date_of_day_zero" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Time</label>
-                                                            <input type="time" name="pre_time_of_day_zero" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Site</label>
-                                                            <input type="text" name="pre_site_of_day_zero" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>R/L</label>
-                                                            <select type="text" name="pre_r_or_l_zero" class="rounded-md p-3 ps-2 border-0">
-                                                                <option value="">Right or Left</option>
-                                                                <option value="right">Right</option>
-                                                                <option value="left">Left</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>NOD</label>
-                                                            <input type="text" name="pre_nod_zero" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
-                                                        <div class="uppercase font-bold col-span-5">
-                                                            <h3>DAY 7</h3>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Date</label>
-                                                            <input type="date" name="pre_date_of_day_seven" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Time</label>
-                                                            <input type="time" name="pre_time_of_day_seven" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Site</label>
-                                                            <input type="text" name="pre_site_of_day_seven" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>R/L</label>
-                                                            <select type="text" name="pre_r_or_l_seven" class="rounded-md p-3 ps-2 border-0">
-                                                                <option value="">Right or Left</option>
-                                                                <option value="right">Right</option>
-                                                                <option value="left">Left</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>NOD</label>
-                                                            <input type="text" name="pre_nod_seven" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
-                                                        <div class="uppercase font-bold col-span-5">
-                                                            <h3>DAY 21</h3>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Date</label>
-                                                            <input type="date" name="pre_date_of_day_twenty_one" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Time</label>
-                                                            <input type="time" name="pre_time_of_day_twenty_one" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>Site</label>
-                                                            <input type="text" name="pre_site_of_day_twenty_one" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>R/L</label>
-                                                            <select type="text" name="pre_r_or_l_twenty_one" class="rounded-md p-3 ps-2 border-0">
-                                                                <option value="">Right or Left</option>
-                                                                <option value="right">Right</option>
-                                                                <option value="left">Left</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="flex flex-col">
-                                                            <label>NOD</label>
-                                                            <input type="text" name="pre_nod_twenty_one" class="rounded-md p-3 ps-2 border-0" />
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
 
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
                                         <div class="col-span-2">
@@ -678,7 +496,46 @@
         <script>
             $(document).ready(function() {
 
-                
+                 // Scroll to the first input field with an error
+                $('input.error, select.error, checkbox.error').first().focus();
+                // Optionally, you can also scroll to the top of the page
+                // window.scrollTo(0, 0);
+
+                $('#typeSelect').change(function() {
+                    var selectedType = $(this).find('option:selected').data('type');
+                    switch (selectedType) {
+                        case 'booster':
+                            $('#daySelect option').hide();
+                            $('#daySelect option[data-type="default"]').show(); // Show the default option
+                            break;
+                        case 'post':
+                            $('#daySelect option').each(function() {
+                                var optionType = $(this).data('type');
+                                if(optionType==='pre'){
+                                    $(this).hide(); 
+                                }else{
+                                    $(this).show(); 
+                                } 
+                            });
+                            break;
+                        case 'pre':
+                            $('#daySelect option').each(function() {
+                                var optionType = $(this).data('type');
+                                if(optionType==='post'){
+                                    $(this).hide(); 
+                                }else{
+                                    $(this).show(); 
+                                }  
+                            });
+                            break;
+                    
+                        default:
+                            $('#daySelect option').show();
+                            break;
+                    }
+                    
+                    $('#daySelect').val('');
+                });
                 
             })
         </script>

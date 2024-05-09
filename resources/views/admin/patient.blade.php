@@ -68,11 +68,9 @@
                                         </div>
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Patient
+                                        Patient Name
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Description
-                                    </th>
+                                    
                                     <th scope="col" class="px-6 py-3">
                                         Status
                                     </th>
@@ -84,10 +82,39 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                
-                                {{ $patientRecords }}
-                                
+                            <tbody>  
+                                {{-- {{ $patientRecords }} --}}
+                                @foreach ($patientRecords as $patientRecord)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="w-4 p-4">
+                                        <div class="flex items-center">
+                                            <input value="{{ $patientRecord->id }}" type="checkbox" class="checkbox-id w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="checkbox-id" class="sr-only">checkbox</label>
+                                        </div>
+                                    </td>
+                                    <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                        <img class="w-10 h-10 rounded-full" src="{{ asset('storage').'/'.$patientRecord->user->profile }}" alt="Jese image">
+                                        <div class="ps-3">
+                                            <div class="text-base font-semibold">{{ $patientRecord->user->firstname }} {{ $patientRecord->user->middlename }} {{ $patientRecord->lastname }}</div>
+                                            <div class="font-normal text-gray-500">{{ $patientRecord->user->email }}</div>
+                                        </div>  
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <div class="h-2.5 w-2.5 rounded-full bg-green-600 me-2"></div> Recorded
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <?php echo date('Y-m-d H:i:s', strtotime($patientRecord->created_at)); ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <!-- Modal toggle -->
+                                        <a href="{{ route('admin.open', $patientRecord->id) }}" type="button" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Open</a>
+                                        <a href="{{ route('admin.treatment.edit', $patientRecord->id) }}" type="button" class="font-medium text-red-600 dark:text-red-500 hover:underline">Update</a>
+                                        <a href="{{ route('admin.vaccination', $patientRecord->id) }}" type="button" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Vaccine</a>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                         
@@ -95,7 +122,7 @@
 
                     @if (empty($location))
                         <div id="locationSetupPopup">
-                            @include('user.popup.location-setup')
+                            @include('admin.popup.clinic-setup')
                         </div>
                     @endif
                 </div>

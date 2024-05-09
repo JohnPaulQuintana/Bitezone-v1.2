@@ -14,6 +14,7 @@
             <div class="hidden">
                 <input type="text" name="lat" id="lat">
                 <input type="text" name="long" id="long">
+                <input type="text" name="address" id="addr">
             </div>
             <button type="button" id="locationBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">Enable Location Sharing</button>
         </div>

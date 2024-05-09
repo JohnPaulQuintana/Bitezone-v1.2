@@ -1,4 +1,4 @@
-<div id="clinicContainer" class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50" data-id="clinic">
+<div id="clinicContainer" class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-99999" data-id="clinic">
     <div class="bg-white p-8 rounded shadow-md max-h-[600px] overflow-auto">
         {{-- <span id="closePopupBtn" class="absolute top-0 right-0 mt-4 mr-4 text-gray-700 cursor-pointer">&times;</span> --}}
         <h2 class="text-2xl font-bold mb-4 capitalize text-center">Setup your clinic information</h2>
@@ -15,6 +15,7 @@
                 <div class="hidden">
                     <input type="text" name="lat" id="lat">
                     <input type="text" name="long" id="long">
+                    <input type="text" name="address" id="addr">
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 items-center">
                     <div class="p-2">

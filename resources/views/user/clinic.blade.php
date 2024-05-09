@@ -11,7 +11,7 @@
         </div>
         <div class="max-w-12xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-2 h-full">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="px-6 text-gray-900 dark:text-gray-100 mb-2">
                     <div class="flex flex-row justify-between items-center">
                         <div>
                             <span class="text-red-700 font-bold">A</span>vailable <span class="ml-1"><span
@@ -21,12 +21,8 @@
                             
                             <form class="max-w-md mx-auto">   
                                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                        </svg>
-                                    </div>
+                                <div class="">
+                                    
                                     <input type="search" id="search-clinic" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Clinic's" required />
                                     
                                 </div>
@@ -39,17 +35,19 @@
 
                 {{-- record table here --}}
                 <div class="grid grid-cols-1 gap-1 lg:grid-cols-3 pl-6">
-
-                    <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full h-[500px] overflow-auto mb-2">
+                    {{-- <div class="col-span-3 bg-slate-50 text-red-700">
+                        <span>All the clinic list is clickable for easy navigation.</span>
+                    </div> --}}
+                    <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full h-fit overflow-auto mb-2">
                         {{-- {{ $clinicLocation }} --}}
                         @foreach ($clinicLocation as $clinic)
                             <div data-name="{{ $clinic->clinic->name }}"
-                                class="clinic shadow border-l-4 p-2 w-full lg:w-[300px] h-fit grid grid-cols-1 lg:grid-cols-2 gap-2 mb-2 rounded-md hover:cursor-pointer hover:opacity-50">
+                                class="clinic shadow border-l-8 border-red-500 bg-slate-50 p-2 w-full h-fit grid grid-cols-1 lg:grid-cols-2 gap-2 mb-2 rounded-md hover:cursor-pointer hover:opacity-50">
                                 <img src="{{ asset('storage') . '/' . $clinic->clinic->profile }}" alt=""
                                     class="w-[200px] h-[100px] rounded-md">
                                 
                                 <div class="">
-                                    <span class="text-sm font-bold">{{ $clinic->clinic->name }}</span>
+                                    <span class="text-sm font-bold uppercase">{{ $clinic->clinic->name }}</span>
                                     <div class="rounded-sm text-[12px] grid grid-cols-1 md:grid-cols-2 gap-2">
                                         <div class="shadow text-blue-500 text-center">
                                             <span>Open</span>
@@ -77,27 +75,6 @@
                                 </div>
                             </div>
                         @endforeach
-                        
-                        {{-- @for ($i = 1; $i <= 5; $i++)
-                            @if ($i === 5)
-                                <div
-                                    class="clinic shadow p-2 w-20 h-20 flex flex-col items-center rounded-md hover:cursor-pointer hover:opacity-50">
-                                    <img src="{{ asset('storage') . '/' . Auth::user()->profile }}" alt=""
-                                        class="w-10 h-10">
-                                    <span>Me</span>
-                                </div>
-                            @else
-                                <div
-                                    class="clinic shadow p-2 w-20 h-20 flex flex-col items-center rounded-md hover:cursor-pointer hover:opacity-50">
-                                    <img src="{{ asset('storage') . '/' . Auth::user()->profile }}" alt=""
-                                        class="w-10 h-10">
-                                    <span>Clinic {{ $i }}</span>
-                                </div>
-                            @endif
-                        @endfor --}}
-                        {{-- <div class="col-span-2 absolute bottom-0">
-                            {{ $clinicLocation->links() }}
-                        </div> --}}
                     </div>
                     <div id="map" style="width: 100%; height: 500px;" class="col-span-2"></div>
                 </div>
@@ -159,21 +136,24 @@
                     let coords = []
                     let images = [] //stored images 
                     let names = [] //stored labels for all registered clinic
-                 
+                    let address = []
                     $clinicInformation.forEach(coord => {
-                        // console.log(coord.user_id)
+                        // console.log(coord)
                         coords.push([parseFloat(coord.lat), parseFloat(coord.long)])
                         images.push(coord.clinic.profile);
                         names.push([{label:coord.clinic.name}, {userId: coord.user_id}])
+                        let splitAddress = coord.address.split(", ")
+                        address.push([{addr:`${splitAddress[2]} ${splitAddress[3]}, ${splitAddress[4]}.`}])
                     });
-
+                    // console.log(address)
                     coords.push([parseFloat($mylocation.lat), parseFloat($mylocation.long), {type:"starting-point"}])
                     images.push($mylocation.user.profile);
                     names.push([{label:`${$mylocation.user.firstname} ${$mylocation.user.lastname}`}, {userId:$mylocation.user_id}]);
-                    
+                    let splitMyAddress = $mylocation.address.split(", ")
+                    address.push([{addr:`${splitMyAddress[2]} ${splitMyAddress[3]}, ${splitMyAddress[4]}.`}])
                     
                 
-                    console.log(names)
+                    console.log(address)
 
                     // coords = [
                     //     [14.56103, 120.59476],
@@ -210,7 +190,7 @@
                         let startPointExists = coords[index] && coords[index][2]?.type;
                         // console.log(coords[index][2].type)
                         let startPointNotEmpty = startPointExists ? coords[index][2]?.type !== "" : false;
-
+                        let control = ''
                         // popups
                         if(startPointNotEmpty){
                             btnShow = 'hidden'
@@ -234,12 +214,18 @@
                             // console.log('yes')
                             content += `
                             <div class="flex flex-col">
-                                <span class="text-sm font-bold text-blue-500">My location</span>
+                                
+                                <span class="text-[12px] font-bold">My Location</span>
+                                <span class="text-[10px] text-blue-500 font-bold text-wrap">${address[index][0].addr}</span>
                             </div>`
                         } else {
                             content += `
-                            <div class="flex flex-col">
-                                <span class="text-sm font-bold">${names[index][0].label}</span><span class="text-red-500 text-[10px]">Distance: ${distances[index].toFixed(2)} meters</span>
+                            <div class="flex flex-col items-center">
+                                
+                                <span class="text-[12px] font-bold text-wrap">${names[index][0].label}</span>
+                                
+                                <span class="text-[10px] text-blue-500 font-bold text-wrap">${address[index][0].addr}</span>
+                                <span class="text-red-500 text-[10px]">Distance: ${distances[index].toFixed(2)} meters</span>
                             </div>`
                         }
                         var toollip = L.tooltip({
@@ -248,13 +234,48 @@
 
                         marker.bindTooltip(toollip);
 
+                        // console.log(startPointNotEmpty)
                         //zoom in / fly to when hovering the clinic
                         // console.log(clinicElements)
-                        $('.clinic').each(function(index, element) {
+                        $('.clinic').each(function(i, element) {
                             // Add click event listener to each clinic element
                             $(element).click(function() {
+                                // Scroll down to the bottom of the page
+                                $("html, body, .main").animate({ scrollTop: $(document).height() }, 1000);
+
                                 // Trigger map flyTo action using coords[index]
-                                map.flyTo(coords[index], 19);
+                                map.flyTo(coords[i], 19);
+                               
+
+                                setTimeout(() => {
+                                    map.flyTo(coords[i], 15);
+                                    // Add routing functionality
+                                    var userLocation = [$mylocation.lat, $mylocation.long]; // user's current location
+                                    if (control !== '') {
+                                        map.removeControl(control)
+                                        control = ''
+                                    }
+                                    // Create Leaflet Routing Machine control
+                                    control = L.Routing.control({
+                                        waypoints: [
+                                            L.latLng(userLocation), // Start point (user's location)
+                                            L.latLng(coords[i]) // End point (clinic's location)
+                                        ],
+                                        routeWhileDragging: false, // Show route while dragging the waypoint marker
+                                        // hide: true, // Hide the instruction panel
+                                        show: false // Hide the control completely
+                                        // geocoder: L.Control.Geocoder.nominatim() // Geocoding service
+                                    
+                                    }).addTo(map);
+                                }, 2000);
+                                
+
+                                
+                                setTimeout(() => {
+                                    map.removeControl(control)
+                                    control = ''
+                                }, 10000);
+                                
                             });
                         });
 
