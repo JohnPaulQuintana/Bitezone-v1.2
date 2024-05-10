@@ -105,13 +105,56 @@
 
         <div class="video-overlay header-text">
             <div class="caption">
-                <h6>Bitezone Application</h6>
+                <h6>Guest Account</h6>
                 <h6 class="mt-3">for the</h6>
-                <h2 class="mt-0"><em>Anti-Rabies Program</em> </h2>
-                <div class="main-button">
-                    <div class="scroll-to-section"><a href="{{ route('guest') }}" class="b-r hover:cursor-pointer">Login as Guest</a></div>
-                </div>
+                <h2 class="mt-0"><em>bitezone application</em> </h2>
+                
             </div>
+        </div>
+    </section>
+    <!-- ***** Main Banner Area End ***** -->
+    <!-- ***** Main Banner Area Start ***** -->
+    <section class="section main-banner" id="center" data-section="section">
+        <div class="bg-white h-full p-2 md:p-10">
+           <div class="flex gap-2 mb-2">
+                <h1 class="text-red-500 text-xl font-bold uppercase tracking-wider">Announcement</h1>
+                <span class="font-bold text-white bg-red-500 rounded-xl h-fit w-fit px-1">20</span>
+           </div>
+
+           {{-- contents --}}
+           <div class="flex gap-2">
+                <div class="shadow p-2 border-t-4 border-red-500">
+                    <div class="uppercase flex flex-col md:flex-row gap-2 items-center text-wrap">
+                        <img class="w-full md:w-[20%]" src="https://static.vecteezy.com/system/resources/thumbnails/018/921/868/small_2x/seminar-presentation-flat-color-png.png" alt="">
+                        <div class="bg-slate-50 rounded-md text-pretty p-2 w-full ease-in-out duration-300 overflow-hidden">
+                            <div class="flex flex-row md:gap-1 md:px-[30px] items-center">
+                                <img class="rounded-xl w-5" src="{{ asset('assets/images/author-01.png') }}" alt="">
+                                <div class="grid grid-cols-2 gap-1 items-center md:flex md:gap-2">
+                                    <span class="text-[10px] md:text-[12px] font-semibold h-fit">John Doe Quintana - </span>
+                                    <span class="text-[10px] md:text-[12px] font-semibold">Clinic Name Here</span>
+                                    
+                                </div>
+                            </div>
+                            <div class="md:pl-4">
+                                <h1 class="text-sm md:text-xl px-2 font-bold tracking-wider mb-2">Title : <span>Event Title here</span></h1>
+                                <div class="h-full flex flex-col bg-white py-2">
+                                    <h1 class="text-sm md:text-md font-semibold px-2 tracking-wider"><span>Event Detail's</span></h1>
+                                    <p class="p-2">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum veniam quaerat consectetur voluptatum consequatur placeat ab non culpa error cupiditate illum, delectus repellat odio, excepturi, voluptate aut magnam adipisci obcaecati?
+                                    </p>
+                                </div>
+                                <div class="bg-white w-fit p-2 text-red-500 flex flex-row gap-4">
+                                    <span class="font-bold text-sm md:text-md">January 01, 2024</span>
+                                    <a href="#" class="bg-red-500 text-[10px] hover:bg-red-700 text-white px-2 capitalize">Join Now</a>
+                                    <span class="bg-red-500 text-[10px] hover:bg-red-700 text-white px-2 capitalize">Seminar</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+           </div>
         </div>
     </section>
     <!-- ***** Main Banner Area End ***** -->
@@ -146,7 +189,7 @@
         $(document).ready(function() {
             //according to loftblog tut
             $('.nav li:first').addClass('active');
-
+            $("html, body, .main").animate({ scrollTop: $(document).height() }, 1000);
         })
     </script>
 </body>

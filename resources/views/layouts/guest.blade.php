@@ -125,7 +125,7 @@
                 <h6 class="font-bold text-xl md:text-2xl text-red-500 mt-3">for the</h6>
                 <h2 class="mt-1 font-bold text-center text-4xl md:text-6xl text-red-500 uppercase not-italic">Anti-Rabies Program</h2>
                 <div class="main-button mt-3">
-                    <div class="scroll-to-section"><a class="b-r hover:cursor-pointer hover:bg-red-800">Login as Guest</a></div>
+                    <div class="scroll-to-section"><a href="{{ route('guest') }}" class="b-r hover:cursor-pointer hover:bg-red-800">Login as Guest</a></div>
                 </div>
             </div>
             <div class="flex justify-center items-center">
