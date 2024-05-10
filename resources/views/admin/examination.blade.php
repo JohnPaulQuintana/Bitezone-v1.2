@@ -78,7 +78,7 @@
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="record_number">Patient's Record Number</label>
-                                                    <input type="text" name="record_number" class="rounded-md p-2 ps-2 border-0 ">
+                                                    <input type="text" name="record_number" class="rounded-md p-2 ps-2 border-0" value="{{ old('record_number') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -91,7 +91,10 @@
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="place_of_birth">Place of Birth</label>
-                                                    <input type="text" name="place_of_birth" class="rounded-md p-2 ps-2 border-0">
+                                                    <input type="text" name="place_of_birth" class="rounded-md p-2 ps-2 border-0" value="{{ old('place_of_birth') }}">
+                                                    @error('place_of_birth')
+                                                        <p class="text-red-500">Place of birth is required</p>
+                                                    @enderror
                                                 </div>
                                                 <div class="flex flex-col">
                                                     <label for="contact_no">Contact Number</label>
@@ -107,7 +110,7 @@
                                             <div class="col-span-2 text-center uppercase font-bold text-white bg-red-500">
                                                 <h1>chief complain's</h1>
                                             </div>
-                                            <input type="text" name="complain" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="complain" class="rounded-md p-3 ps-2 border-0" value="{{ old('complain') }}">
                                         </div>
 
                                     </div>
@@ -118,23 +121,23 @@
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="bp">BP</label>
-                                            <input type="text" name="bp" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="bp" class="rounded-md p-3 ps-2 border-0" value="{{ old('bp') }}">
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="pr">PR</label>
-                                            <input type="text" name="pr" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="pr" class="rounded-md p-3 ps-2 border-0" value="{{ old('pr') }}">
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="rr">RR</label>
-                                            <input type="text" name="rr" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="rr" class="rounded-md p-3 ps-2 border-0" value="{{ old('rr') }}">
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="temp">Temperature</label>
-                                            <input type="text" name="temperature" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="temperature" class="rounded-md p-3 ps-2 border-0" value="{{ old('temperature') }}">
                                         </div>
                                         <div class="flex flex-col">
                                             <label for="wt">WT</label>
-                                            <input type="text" name="wt" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="wt" class="rounded-md p-3 ps-2 border-0" value="{{ old('wt') }}">
                                         </div>
 
                                     </div>
@@ -145,7 +148,7 @@
                                         </div>
                                         <div class="col-span-2 flex flex-col">
                                             <label for="history_of_present_illness">History of Present Illness</label>
-                                            <input type="text" name="history_of_present_illness" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="history_of_present_illness" class="rounded-md p-3 ps-2 border-0" value="{{ old('history_of_present_illness') }}">
                                         </div>
                                         <div class="col-span-2 flex flex-col">
                                             <label for="site_of_bite">Site of Bite</label>
@@ -255,15 +258,15 @@
                                         </div>
                                         <div class="col-span-2 flex flex-col">
                                             <label for="pertinent_pe">Pertinent PE</label>
-                                            <input type="text" name="pertinent_pe" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="pertinent_pe" class="rounded-md p-3 ps-2 border-0" value="{{ old('pertinent_pe') }}">
                                         </div>
                                         <div class="col-span-2 flex flex-col">
                                             <label for="diagnosis">Diagnosis</label>
-                                            <input type="text" name="diagnosis" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="diagnosis" class="rounded-md p-3 ps-2 border-0" value="{{ old('diagnosis') }}">
                                         </div>
                                         <div class="col-span-2 flex flex-col">
                                             <label for="home_medecine">Home Medicine</label>
-                                            <input type="text" name="home_medicine" class="rounded-md p-3 ps-2 border-0">
+                                            <input type="text" name="home_medicine" class="rounded-md p-3 ps-2 border-0" value="{{ old('home_medicine') }}">
                                         </div>
                                         <div class="col-span-2 flex flex-col justify-center items-center">
                                             

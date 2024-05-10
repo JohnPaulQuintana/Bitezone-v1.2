@@ -21,13 +21,12 @@
                     
                     <div class="overflow-auto shadow-md sm:rounded-lg px-2">
                        
-                        
                         {{-- actual display --}}
-                        @include('admin.template.display', ['treatment'=>$treatment])
+                        @include('user.template.display', ['treatment'=>$treatment])
                         
                         {{-- for printing --}}
                         {{-- {{ $examination }} --}}
-                        @include('admin.template.print', ['treatment'=>$treatment])
+                        @include('user.template.print', ['treatment'=>$treatment])
                     </div>
 
                     @if (empty($location))
@@ -99,9 +98,10 @@
                 if(sessionTitle,sessionMessage !== null && sessionStatus !== null){
                     popups(sessionTitle,sessionMessage, sessionStatus);
                 }
+
+                
                 
             })
-
             const PrintDiv = ()=> {
                     var contents = document.getElementById("contents").innerHTML;
                     var frame1 = document.createElement('iframe');

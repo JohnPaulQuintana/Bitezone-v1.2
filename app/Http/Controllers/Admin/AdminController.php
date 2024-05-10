@@ -104,7 +104,7 @@ class AdminController extends Controller
         $validated = $request->validate([
             'body_parts'=>'required', 
             'type' => 'required',
-            'day' => 'required',
+            'sday' => 'required',
             'sdate' => 'required',
             'stime' => 'required',
             'rl' => 'required',
@@ -120,6 +120,7 @@ class AdminController extends Controller
        $treatment =  Treatment::create([
             'user_id' => $request->patient_id,
             'clinic_id' => auth()->user()->id,
+            'consultation_id' => $request->consultation_id,
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'middlename' => $request->middlename,
@@ -352,6 +353,12 @@ class AdminController extends Controller
         $location = Location::where('user_id',auth()->user()->id)->first();
         $treatment = Treatment::with(['user','bite','exposure','post_exposure','pre_exposure','booster'])->where('id', $request->id)->first();
         return view('admin.open', compact('location', 'treatment'));
+    }
+
+    // announcement
+    public function announcement(){
+        $location = Location::where('user_id',auth()->user()->id)->first();
+        return view('admin.announcement', compact('location'));
     }
 
 }

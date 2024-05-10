@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Consultation;
 use App\Models\Location;
+use App\Models\Treatment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,5 +93,18 @@ class UserController extends Controller
         $record->created_at = $request->input('date');
         $record->save();
         return Redirect::route('user.edit', $request->id)->with(['status'=>'success', 'message'=>'Successfully updated!.']);
+    }
+
+    // open
+    public function open(Request $request){
+        $location = Location::where('user_id',auth()->user()->id)->first();
+        $treatment = Treatment::with(['user','bite','exposure','post_exposure','pre_exposure','booster'])->where('consultation_id', $request->id)->first();
+        return view('user.open', compact('location', 'treatment'));
+    }
+
+     // announcement
+     public function announcement(){
+        $location = Location::where('user_id',auth()->user()->id)->first();
+        return view('user.announcement', compact('location'));
     }
 }

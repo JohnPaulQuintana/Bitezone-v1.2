@@ -21,7 +21,41 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-solid.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-regular.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-light.css">
+    <style>
+        /* select[name=rejected-table_length]:not([size]) {
+            background-image: none;
+        }
 
+        select[name=accepted-table_length]:not([size]) {
+            background-image: none;
+        }
+
+        select[name=department-table_length]:not([size]) {
+            background-image: none;
+        } */
+
+        /* Hide the default scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #e46953;
+        }
+        
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cc1212;
+            cursor: pointer;
+        }
+
+    </style>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900"
         rel="stylesheet">
 
@@ -61,7 +95,7 @@
                     <img class="w-12 h-12" src="{{ asset('images/logo2.png') }}" alt="" srcset="">
                 @endif
                 
-                <em>NEWZONE</em>
+                <em>BITEZONE</em>
             </a>
         </div>
         <a class="menu-link hover:cursor-pointer"><i class="fa fa-bars"></i></a>
@@ -87,9 +121,9 @@
     <main class="flex items-center justify-center">
         <div class="video-overlay header-text grid grid-cols-1 md:grid-cols-2">
             <div class="flex flex-col justify-center items-center mt-29">
-                <h6 class="font-bold text-xl md:text-2xl text-white">Newzone Application</h6>
-                <h6 class="font-bold text-xl md:text-2xl text-white mt-3">for the</h6>
-                <h2 class="mt-1 font-bold text-center text-4xl md:text-6xl text-red-600 uppercase not-italic">Anti-Rabies Program</h2>
+                <h6 class="font-bold text-xl md:text-2xl text-red-500">Newzone Application</h6>
+                <h6 class="font-bold text-xl md:text-2xl text-red-500 mt-3">for the</h6>
+                <h2 class="mt-1 font-bold text-center text-4xl md:text-6xl text-red-500 uppercase not-italic">Anti-Rabies Program</h2>
                 <div class="main-button mt-3">
                     <div class="scroll-to-section"><a class="b-r hover:cursor-pointer hover:bg-red-800">Login as Guest</a></div>
                 </div>

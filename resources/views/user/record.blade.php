@@ -132,7 +132,7 @@
                                                         <a href="{{ route('user.edit',  $record->id) }}" type="button" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                                         @break
                                                     @case(1)
-                                                        <a href="#" type="button" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Open</a>
+                                                        <a href="{{ route('user.open', $record->id) }}" type="button" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Open</a>
                                                         @break
                                                     
                                                     @default

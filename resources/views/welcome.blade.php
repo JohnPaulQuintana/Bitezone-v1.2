@@ -47,7 +47,7 @@
         <div class="logo">
             <a href="#" class="flex items-center gap-2">
                 <img class="w-12 h-12" src="{{ asset('images/logo2.png') }}" alt="" srcset="">
-                <em>NEWZONE</em>
+                <em>BITEZONE</em>
             </a>
         </div>
         <a class="menu-link hover:cursor-pointer"><i class="fa fa-bars"></i></a>
@@ -75,7 +75,7 @@
 
         <div class="video-overlay header-text">
             <div class="caption">
-                <h6>Newzone Application</h6>
+                <h6>Bitezone Application</h6>
                 <h6 class="mt-3">for the</h6>
                 <h2 class="mt-0"><em>Anti-Rabies Program</em> </h2>
                 <div class="main-button">
@@ -91,7 +91,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <p><i class="fa fa-copyright"></i> Copyright 2024 by ETEEAP
+                    <p><i class="fa fa-copyright"></i> Copyright 2024 by BITEZONE
 
                     </p>
                 </div>

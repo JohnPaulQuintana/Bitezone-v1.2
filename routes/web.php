@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('vaccination/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'vaccination'])->name('vaccination');
         Route::post('vaccine', [\App\Http\Controllers\Admin\AdminController::class, 'vaccine'])->name('vaccine');
         Route::get('open/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'open'])->name('open');
+        Route::get('announcement', [\App\Http\Controllers\Admin\AdminController::class, 'announcement'])->name('announcement');
     });
 
     Route::group(['prefix' => 'user','as' => 'user.'], function () {
@@ -53,6 +54,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('send', [\App\Http\Controllers\User\UserController::class, 'send'])->name('send');
         Route::get('edit/{id}', [\App\Http\Controllers\User\UserController::class, 'edit'])->name('edit');
         Route::post('update', [\App\Http\Controllers\User\UserController::class, 'update'])->name('update');
+        Route::get('open/{id}', [\App\Http\Controllers\User\UserController::class, 'open'])->name('open');
+        Route::get('announcement', [\App\Http\Controllers\User\UserController::class, 'announcement'])->name('announcement');
     });
 });
 
