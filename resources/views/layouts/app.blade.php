@@ -237,7 +237,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
                 const assetUrl = "{{ asset('storage') }}";
                 n.forEach(e => {
                     renderNotif += `
-                            <li class="">
+                            <li class="w-full">
                                 <a class="flex shadow-xl flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
                                     href="#">
                                     <div class="flex gap-1 items-center">
@@ -245,7 +245,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
                                         <span class="text-sm">${e.name}</span>
                                         <span class="text-sm bg-red-500 text-white h-fit rounded-md px-1">Follow-up</span>
                                     </div>
-                                    <p class="text-sm -mt-2">
+                                    <p class="text-sm -mt-2 break-words">
                                         ${e.details}
                                     </p>
 

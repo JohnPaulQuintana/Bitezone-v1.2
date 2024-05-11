@@ -450,7 +450,7 @@ class AdminController extends Controller
         Notification::create([
             'user_id'=>$id, 'profile'=>auth()->user()->profile, 
             'name'=>auth()->user()->firstname.' '.auth()->user()->lastname,
-            'details'=>'has sent a follow-up appointment for the vaccination.',
+            'details'=>'has added a new follow-up record for your vaccination appoinment.',
             'type'=>'follow-up',
         ]);
     }
