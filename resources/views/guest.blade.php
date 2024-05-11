@@ -49,23 +49,22 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         /* Track */
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
-        
+
         /* Handle */
         ::-webkit-scrollbar-thumb {
             background: #e46953;
         }
-        
+
         /* Handle on hover */
         ::-webkit-scrollbar-thumb:hover {
             background: #e7291b;
             cursor: pointer;
         }
-
     </style>
 </head>
 
@@ -108,7 +107,7 @@
                 <h6>Guest Account</h6>
                 <h6 class="mt-3">for the</h6>
                 <h2 class="mt-0"><em>bitezone application</em> </h2>
-                
+
             </div>
         </div>
     </section>
@@ -116,45 +115,72 @@
     <!-- ***** Main Banner Area Start ***** -->
     <section class="section main-banner" id="center" data-section="section">
         <div class="bg-white h-full p-2 md:p-10">
-           <div class="flex gap-2 mb-2">
+            <div class="flex gap-2 mb-2">
                 <h1 class="text-red-500 text-xl font-bold uppercase tracking-wider">Announcement</h1>
                 <span class="font-bold text-white bg-red-500 rounded-xl h-fit w-fit px-1">20</span>
-           </div>
+            </div>
 
-           {{-- contents --}}
-           <div class="flex gap-2">
-                <div class="shadow p-2 border-t-4 border-red-500">
-                    <div class="uppercase flex flex-col md:flex-row gap-2 items-center text-wrap">
-                        <img class="w-full md:w-[20%]" src="https://static.vecteezy.com/system/resources/thumbnails/018/921/868/small_2x/seminar-presentation-flat-color-png.png" alt="">
-                        <div class="bg-slate-50 rounded-md text-pretty p-2 w-full ease-in-out duration-300 overflow-hidden">
-                            <div class="flex flex-row md:gap-1 md:px-[30px] items-center">
-                                <img class="rounded-xl w-5" src="{{ asset('assets/images/author-01.png') }}" alt="">
-                                <div class="grid grid-cols-2 gap-1 items-center md:flex md:gap-2">
-                                    <span class="text-[10px] md:text-[12px] font-semibold h-fit">John Doe Quintana - </span>
-                                    <span class="text-[10px] md:text-[12px] font-semibold">Clinic Name Here</span>
-                                    
+            {{-- contents --}}
+            @foreach ($announcements as $announcement)
+                <div class="flex gap-2 mb-2">
+                    <div class="shadow p-2 border-t-4 border-red-500 w-full">
+                        <div class="uppercase flex flex-col md:flex-row gap-2 items-center text-wrap">
+                            <img class="w-full md:w-[20%]"
+                                src="{{ asset('images/announcement.jpg') }}"
+                                alt="">
+                            <div
+                                class="bg-slate-50 rounded-md text-pretty p-2 w-full ease-in-out duration-300 overflow-hidden">
+                                <div class="flex flex-row md:gap-1 md:px-[30px] items-center">
+                                    <img class="rounded-xl w-5" src="{{ asset('storage').'/'.$announcement->user->profile }}"
+                                        alt="">
+                                    <div class="grid grid-cols-2 gap-1 items-center md:flex md:gap-2">
+                                        <span class="text-[10px] md:text-[12px] font-semibold h-fit">{{ $announcement->user->firstname }} {{ $announcement->user->lastname }} -
+                                        </span>
+                                        <span class="text-[10px] md:text-[12px] font-semibold">{{ $announcement->user->location->clinic->name }}</span>
+
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="md:pl-4">
-                                <h1 class="text-sm md:text-xl px-2 font-bold tracking-wider mb-2">Title : <span>Event Title here</span></h1>
-                                <div class="h-full flex flex-col bg-white py-2">
-                                    <h1 class="text-sm md:text-md font-semibold px-2 tracking-wider"><span>Event Detail's</span></h1>
-                                    <p class="p-2">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum veniam quaerat consectetur voluptatum consequatur placeat ab non culpa error cupiditate illum, delectus repellat odio, excepturi, voluptate aut magnam adipisci obcaecati?
-                                    </p>
+                                <div class="md:pl-4">
+                                    <h1 class="text-sm md:text-xl px-2 font-bold tracking-wider mb-2">Title :
+                                        <span>{{ $announcement->title }}</span></h1>
+                                    <div class="h-full flex flex-col bg-white py-2">
+                                        <h1 class="text-sm md:text-md font-semibold px-2 tracking-wider"><span>Event
+                                                Detail's</span></h1>
+                                        <p class="p-2">
+                                            {{ $announcement->details }}
+                                        </p>
+                                    </div>
+                                    @if ($announcement->type === 'seminar')
+                                        <div class="px-2">
+                                            <span>Event Date:</span>
+                                        </div>
+                                    @else
+                                        <div class="px-2">
+                                            <span>Created Date:</span>
+                                        </div>
+                                    @endif
+                                    <div class="bg-white w-fit p-2 text-red-500 flex flex-row gap-4">
+                                        
+                                        <span class="font-bold text-sm md:text-md">{{ \Carbon\Carbon::parse($announcement->date)->format('F d, Y') }}</span>-
+                                        <span class="font-bold text-sm md:text-md">{{ \Carbon\Carbon::parse($announcement->time)->format('g:i A') }}</span>
+                                        @if (\Carbon\Carbon::parse($announcement->date)->format('F d, Y') === \Carbon\Carbon::parse(now())->format('F d, Y') && $announcement->type === 'seminar')
+                                            <a href="{{  $announcement->url }}"
+                                            class="bg-red-500 text-[10px] hover:bg-red-700 text-white px-2 capitalize">Join
+                                            Now</a>
+                                        @endif
+                                        
+                                        <span
+                                            class="bg-red-500 text-[10px] text-white px-2 capitalize">{{  $announcement->type }}</span>
+                                    </div>
+
                                 </div>
-                                <div class="bg-white w-fit p-2 text-red-500 flex flex-row gap-4">
-                                    <span class="font-bold text-sm md:text-md">January 01, 2024</span>
-                                    <a href="#" class="bg-red-500 text-[10px] hover:bg-red-700 text-white px-2 capitalize">Join Now</a>
-                                    <span class="bg-red-500 text-[10px] hover:bg-red-700 text-white px-2 capitalize">Seminar</span>
-                                </div>
-                                
                             </div>
                         </div>
+
                     </div>
-                    
                 </div>
-           </div>
+            @endforeach
+
         </div>
     </section>
     <!-- ***** Main Banner Area End ***** -->
@@ -189,7 +215,9 @@
         $(document).ready(function() {
             //according to loftblog tut
             $('.nav li:first').addClass('active');
-            $("html, body, .main").animate({ scrollTop: $(document).height() }, 1000);
+            $("html, body, .main").animate({
+                scrollTop: $(document).height()
+            }, 1000);
         })
     </script>
 </body>

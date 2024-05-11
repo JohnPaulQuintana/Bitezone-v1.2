@@ -3,8 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Announcement;
 use App\Models\Consultation;
 use App\Models\Location;
+use App\Models\Notification;
 use App\Models\Treatment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -63,5 +65,11 @@ class User extends Authenticatable
     }
     public function treatment() :HasOne{
         return $this->hasOne(Treatment::class);
+    }
+    public function announcement() :HasMany{
+        return $this->hasMany(Announcement::class);
+    }
+    public function notif() :HasMany{
+        return $this->hasMany(Notification::class);
     }
 }

@@ -30,11 +30,13 @@
                 </div>
             </div>
         </div>
-        @if (empty($location))
-                        <div id="locationSetupPopup">
-                            @include('user.popup.location-setup')
-                        </div>
-                    @endif
+        @if (empty($location) && auth()->user()->isAdmin)          
+                @include('admin.popup.clinic-setup')
+        @elseif (empty($location) && !auth()->user()->isAdmin)
+        <div id="locationSetupPopup">
+            @include('user.popup.location-setup')
+        </div>
+        @endif
     </div>
 
 </x-app-layout>

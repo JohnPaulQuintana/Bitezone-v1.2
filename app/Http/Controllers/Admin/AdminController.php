@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Announcement;
 use App\Models\Booster;
 use App\Models\ClinicInformation;
 use App\Models\Consultation;
 use App\Models\Exposure;
+use App\Models\FollowUpVaccine;
 use App\Models\Location;
+use App\Models\Notification;
 use App\Models\PostExposure;
 use App\Models\PreExposure;
 use App\Models\ScheduleOfVaccination;
@@ -21,6 +24,7 @@ class AdminController extends Controller
 {
     public function index(){
         $location = Location::with(['clinic'])->where('user_id',auth()->user()->id)->first();
+        
         return view('admin.index', compact('location'));
     }
 
@@ -288,12 +292,13 @@ class AdminController extends Controller
 
     // vacination
     public function vaccination(Request $request){
-        // dd($request->id);
+        // dd($request->follow_id);
         $patientRecordId =$request->id;  
+        $followId =$request->follow_id;  
         $location = Location::where('user_id',auth()->user()->id)->first();
         $record = Treatment::with(['user', 'post_exposure', 'pre_exposure', 'booster'])->find($patientRecordId);
         // dd($record);
-        return view('admin.vaccine', compact('location', 'record'));
+        return view('admin.vaccine', compact('location', 'record','followId'));
 
     }
 
@@ -315,6 +320,8 @@ class AdminController extends Controller
                     "treatment_id" =>$request->treatment_id,
                     "booster_dose" =>$request->type,
                 ]);
+
+                
                 break;
             case 'POST EXPOSURE':
                $scheduleOfVac = PostExposure::create([
@@ -344,7 +351,14 @@ class AdminController extends Controller
                 break;
         }
 
-        return Redirect::route('admin.patient')->with(['title'=>"Vaccine Recorded!", 'status'=>'success', 'message'=>"New vaccine recorded."]);
+        if($scheduleOfVac){
+            FollowUpVaccine::find($request->follow_id)->update(['status'=>1]);
+            $reciever_id = Treatment::where('id',$request->treatment_id)->first();
+            $this->setupNotif($reciever_id->user_id);
+            
+        }
+
+        return Redirect::route('admin.followup')->with(['title'=>"Vaccine Recorded!", 'status'=>'success', 'message'=>"New vaccine recorded."]);
     }
 
     // view record
@@ -358,7 +372,86 @@ class AdminController extends Controller
     // announcement
     public function announcement(){
         $location = Location::where('user_id',auth()->user()->id)->first();
-        return view('admin.announcement', compact('location'));
+        $announcements = Announcement::with(['user.location.clinic'])->where('user_id',auth()->user()->id)->orderByDesc('created_at')->get();
+        return view('admin.announcement', compact('location', 'announcements'));
     }
 
+    // create announcemnt
+    public function create(Request $request){
+        // dd($request);
+        $validated = $request->validate([
+            "title" => 'required',
+            "type" => 'required',
+            "details" => 'required',
+            "date" => 'required',
+            "time" => 'required',
+        ]);
+
+        Announcement::create([
+            'user_id' => auth()->user()->id,
+            'title'=>$validated['title'],
+            'details'=>$validated['details'],
+            'date'=>$validated['date'],
+            'time'=>$validated['time'],
+            'type'=>$validated['type'],
+            'url'=>$request->url ?? null,
+        ]);
+
+        return Redirect::route('admin.announcement')->with(['title'=>'Announcement Posted!','message'=>"You successfully created an announcement!.",'icon'=>'success']);
+    }
+
+    // edit announcement
+    public function edit(Request $request){
+        // dd($request->id);
+        $announcement = Announcement::find($request->id);
+        // dd($edit);
+        return view('admin.announcement.edit', compact('announcement'));
+    }
+    // update announcement
+    public function update(Request $request){
+        // dd($request);
+        $validated = $request->validate([
+            'title' => 'required',
+            'type' => 'required',
+            'details' => 'required',
+            'date' => 'required',
+            'time' => 'required',
+        ]);
+        $announcement = Announcement::find($request->id);
+        $announcement->update([
+            "title" =>$validated['title'],
+            "type" =>$validated['type'],
+            "details" =>$validated['details'],
+            "date" =>$validated['date'],
+            "time" =>$validated['time'],
+            "url" =>$request->url ?? null,
+        ]);
+        // dd($edit);
+       return Redirect::route('admin.announcement.edit', $request->id)->with(['title'=>"Annoucement Updated!", 'message'=>"You successfully updated the announcement!.", 'icon'=>'success']);
+    }
+
+    // delete addnouncemnet
+    public function delete(Request $request){
+        // dd($request->id);
+        Announcement::destroy($request->id);
+        return Redirect::route('admin.announcement')->with(['title'=>"Annoucement Deleted!", 'message'=>"You successfully deleted the announcement!.", 'icon'=>'success']);
+    }
+
+    //follow up vaccine
+    public function followup(){
+        $location = Location::where('user_id',auth()->user()->id)->first();
+        $followups = FollowUpVaccine::with('consultation.user.treatment')->where('status',0)->paginate(10);
+        // dd($followups);
+        return view('admin.followup.appointment', compact('location','followups'));
+    }
+
+    // setup notification
+    private function setupNotif($id){
+        Notification::create([
+            'user_id'=>$id, 'profile'=>auth()->user()->profile, 
+            'name'=>auth()->user()->firstname.' '.auth()->user()->lastname,
+            'details'=>'has sent a follow-up appointment for the vaccination.',
+            'type'=>'follow-up',
+        ]);
+    }
 }

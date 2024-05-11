@@ -28,6 +28,8 @@
                                 
                                 <form action="{{ route('admin.vaccine') }}" method="post">
                                     @csrf
+
+                                    <input type="number" name="follow_id" value="{{ $followId }}" class="hidden">
                                     {{-- basic information --}}
                                     <div class="grid grid-cols-1 bg-slate-100 p-1 md:grid-cols-3 lg:grid-cols-3 gap-2 mb-4">
                                         <div class="col-span-3 text-center uppercase font-bold text-white bg-red-500">

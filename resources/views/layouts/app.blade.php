@@ -32,23 +32,22 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         /* Track */
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
-        
+
         /* Handle */
         ::-webkit-scrollbar-thumb {
             background: #e46953;
         }
-        
+
         /* Handle on hover */
         ::-webkit-scrollbar-thumb:hover {
             background: #2b302e;
             cursor: pointer;
         }
-
     </style>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -105,10 +104,23 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
     @yield('scripts')
     <script>
         $(document).ready(function() {
+            //get the notif
+            sendRequest('GET', '/notification', {})
+                .then(function(response) {
+                    // Handle successful response
+                    // console.log(response);
+                    populateNotif(response.notification)
+
+                })
+                .catch(function(error) {
+                    // Handle error
+                    console.log(error)
+                });
             // Check if either locationContainer or clinicContainer is visible
             if ($('#locationContainer, #clinicContainer').is(':visible')) {
                 // Determine the type based on which container is visible
-                let type = ($('#locationContainer').is(':visible')) ? $('#locationContainer').data('id') : $('#clinicContainer').data('id');
+                let type = ($('#locationContainer').is(':visible')) ? $('#locationContainer').data('id') : $(
+                    '#clinicContainer').data('id');
 
                 // Popup is visible
                 console.log('Location setup popup is visible');
@@ -144,31 +156,32 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
                     var clickedLng = e.latlng.lng;
                     let address = ''
                     // Use Leaflet's Geocoding API to reverse geocode the coordinates
-                    L.Control.Geocoder.nominatim().reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
-                        if (results.length > 0) {
-                            address = results[0].name;
-                            console.log(address);
-                            // Add marker and circle for clicked location
-                            marker = L.marker([clickedLat, clickedLng]).addTo(map)
-                                .bindPopup(`${address}`)
-                                .openPopup();
+                    L.Control.Geocoder.nominatim().reverse(e.latlng, map.options.crs.scale(map.getZoom()),
+                        function(results) {
+                            if (results.length > 0) {
+                                address = results[0].name;
+                                console.log(address);
+                                // Add marker and circle for clicked location
+                                marker = L.marker([clickedLat, clickedLng]).addTo(map)
+                                    .bindPopup(`${address}`)
+                                    .openPopup();
 
-                            circle = L.circle([clickedLat, clickedLng], {
-                                color: 'red',
-                                fillColor: 'red',
-                                fillOpacity: 0.2,
-                                radius: 100 // You can set your desired radius here
-                            }).addTo(map);
+                                circle = L.circle([clickedLat, clickedLng], {
+                                    color: 'red',
+                                    fillColor: 'red',
+                                    fillOpacity: 0.2,
+                                    radius: 100 // You can set your desired radius here
+                                }).addTo(map);
 
-                            $('#lat').val(clickedLat)
-                            $('#addr').val(address)
-                            $('#long').val(clickedLng)
-                        } else {
-                            alert("No address found at this location.");
-                        }
-                    });
-                    
-                    
+                                $('#lat').val(clickedLat)
+                                $('#addr').val(address)
+                                $('#long').val(clickedLng)
+                            } else {
+                                alert("No address found at this location.");
+                            }
+                        });
+
+
                 })
 
 
@@ -216,6 +229,40 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
             }
 
 
+            //poppulates notification
+            const populateNotif = (n) => {
+                console.log(n)
+                var renderNotif = ''
+                $('#notif_count').text(n.length)
+                const assetUrl = "{{ asset('storage') }}";
+                n.forEach(e => {
+                    renderNotif += `
+                            <li class="">
+                                <a class="flex shadow-xl flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
+                                    href="#">
+                                    <div class="flex gap-1 items-center">
+                                        <img src="${assetUrl}/${e.profile}" alt="" class="w-6 rounded-xl">
+                                        <span class="text-sm">${e.name}</span>
+                                        <span class="text-sm bg-red-500 text-white h-fit rounded-md px-1">Follow-up</span>
+                                    </div>
+                                    <p class="text-sm -mt-2">
+                                        ${e.details}
+                                    </p>
+
+                                    <p class="text-xs -mt-1">${formatDate(e.created_at)}</p>
+                                </a>
+                            </li>
+                    `
+                });
+
+                $('#notif-container').html(renderNotif)
+            }
+
+            function formatDate(dateString) {
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const [year, month, day] = dateString.split('-');
+                return `${parseInt(day)} ${months[parseInt(month) - 1]}, ${year}`;
+            }
 
             //dynamic request
             function sendRequest(method, url, data = {}) {

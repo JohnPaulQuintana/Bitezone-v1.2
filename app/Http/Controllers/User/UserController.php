@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Announcement;
 use App\Models\Consultation;
+use App\Models\FollowUpVaccine;
 use App\Models\Location;
+use App\Models\Notification;
 use App\Models\Treatment;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,8 +19,7 @@ class UserController extends Controller
 {
     public function index(){
         $location = Location::where('user_id',auth()->user()->id)->first();
-        
-        // dd($location);
+       
         return view('user.index', compact("location"));
     }
 
@@ -34,6 +36,7 @@ class UserController extends Controller
             'clinic_information.name as clinic_name'
         ) // Select the columns you need from both tables
         ->where('consultations.user_id', auth()->id())
+        ->with(['followup'])
         ->orderByDesc('consultations.created_at')
         ->paginate(1);
         // dd($records);
@@ -99,12 +102,45 @@ class UserController extends Controller
     public function open(Request $request){
         $location = Location::where('user_id',auth()->user()->id)->first();
         $treatment = Treatment::with(['user','bite','exposure','post_exposure','pre_exposure','booster'])->where('consultation_id', $request->id)->first();
+        // dd($treatment);
         return view('user.open', compact('location', 'treatment'));
     }
 
      // announcement
      public function announcement(){
         $location = Location::where('user_id',auth()->user()->id)->first();
-        return view('user.announcement', compact('location'));
+        $announcements = Announcement::with(['user.location.clinic'])->orderByDesc('created_at')->get();
+        return view('user.announcement', compact('location', 'announcements'));
+    }
+
+    // followup
+    public function followup(Request $request){
+        // dd($request);
+        $validated = $request->validate([
+            "details" => 'required',
+            "date" => 'required',
+            "time" => 'required',
+        ]);
+
+        $follow = FollowUpVaccine::create(['consultation_id'=>$request->consultation_id, 'details'=>$validated['details'],'date'=>$validated['date'],'time'=>$validated['time']]);
+        if($follow){
+            $reciever_id = Consultation::where('id',$request->consultation_id)->first();
+            
+            Notification::create([
+                'user_id'=>$reciever_id->clinic_id, 'profile'=>auth()->user()->profile, 
+                'name'=>auth()->user()->firstname.' '.auth()->user()->lastname,
+                'details'=>'has sent a follow-up appointment for the vaccination.',
+                'type'=>'follow-up',
+            ]);
+        }
+        return Redirect::route('user.record')->with(['title'=>'Follow-up Sent!','message'=>"Follow-up vaccine schedule is sent!.",'icon'=>"success"]);
+    }
+
+    // follow up details
+    public function details(Request $request){
+        // dd($request->id);
+        $followups = Consultation::with('followup','user.treatment')->where('id',$request->id)->get();
+        // dd($followups);
+        return view('user.followup.followup', compact('followups'));
     }
 }
