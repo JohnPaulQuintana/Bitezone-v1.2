@@ -5,7 +5,7 @@
     <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <a href="#" class="flex flex-col items-center gap-2">
             <img src="{{ asset('images/logo2.png') }}" class="w-20" alt="Logo" />
-            <span class="text-white uppercase">NEWZONE Application</span>
+            <span class="text-white uppercase">BITEZONE Application</span>
         </a>
 
         <button class="block lg:hidden" @click.stop="sidebarToggle = !sidebarToggle">
