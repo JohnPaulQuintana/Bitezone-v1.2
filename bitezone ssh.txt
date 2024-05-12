@@ -1,0 +1,43 @@
+username : ssh -p 65002 u490416075@153.92.10.41
+bitezone ssh password : *Bitezon2024
+
+bitezone.online
+setup to server
+1. remove the public_html
+	- rm -rf public_html
+2. navigate to domains
+	- cd domains
+	- delete foldername."domains"
+	- install composer version 2
+		a. to use composer v2, php composer.phar
+	- clone the projects
+	 	a. git clone https://github.com/JohnPaulQuintana/Bitezone-v1.2.git bitezone.online
+	- move the composer phar to home folder ~/
+		a. mv composer.phar ~/
+	- install all dependecies
+		a. php ~/composer.phar install
+		b. cp .env.example .env
+		c. php artisan key:generate --ansi
+		d. php artisan storage:link
+	- make symbolic link to public and public_html
+		a. ln -s public public_html
+3. create database
+	- dbname   : u490416075_bitezone
+	- username : u490416075_bitezone
+	- password : xc6DF$f_a8KEdzc
+
+
+WEBSITE
+https://bitezone.online/
+
+USER ACCOUNT
+1. user1@email.com
+   password
+
+CLINIC ACCOUNT
+2. admin1@email.com
+   password
+3. admin2@email.com
+   password
+4. admin3@email.com
+   password
