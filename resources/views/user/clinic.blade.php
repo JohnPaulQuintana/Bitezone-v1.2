@@ -76,7 +76,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <div id="map" style="width: 100%; height: 500px;" class="col-span-2"></div>
+                    <div id="map" style="width: 100%; height: 600px;" class="col-span-2"></div>
                 </div>
 
                 @if (empty($location))
