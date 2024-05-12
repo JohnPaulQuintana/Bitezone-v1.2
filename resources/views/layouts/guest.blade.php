@@ -121,7 +121,7 @@
     <main class="flex items-center justify-center">
         <div class="video-overlay header-text grid grid-cols-1 md:grid-cols-2">
             <div class="flex flex-col justify-center items-center mt-29">
-                <h6 class="font-bold text-xl md:text-2xl text-red-500">Newzone Application</h6>
+                <h6 class="font-bold text-xl md:text-2xl text-red-500">Bitezone Application</h6>
                 <h6 class="font-bold text-xl md:text-2xl text-red-500 mt-3">for the</h6>
                 <h2 class="mt-1 font-bold text-center text-4xl md:text-6xl text-red-500 uppercase not-italic">Anti-Rabies Program</h2>
                 <div class="main-button mt-3">
