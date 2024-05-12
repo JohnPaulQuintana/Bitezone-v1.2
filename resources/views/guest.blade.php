@@ -76,7 +76,7 @@
         <div class="logo">
             <a href="#" class="flex items-center gap-2">
                 <img class="w-12 h-12" src="{{ asset('images/logo2.png') }}" alt="" srcset="">
-                <em>BITEZONE</em>
+                <em class="text-[30px]">BITEZONE</em>
             </a>
         </div>
         <a class="menu-link hover:cursor-pointer"><i class="fa fa-bars"></i></a>
@@ -90,7 +90,7 @@
 
                     </ul> --}}
                 </li>
-                <li><a class="border" href="{{ route('register') }}">Register Now</a></li>
+                <li><a href="{{ route('register') }}">Register Now</a></li>
             </ul>
         </nav>
     </header>
@@ -117,7 +117,7 @@
         <div class="bg-white h-full p-2 md:p-10">
             <div class="flex gap-2 mb-2">
                 <h1 class="text-red-500 text-xl font-bold uppercase tracking-wider">Announcement</h1>
-                <span class="font-bold text-white bg-red-500 rounded-xl h-fit w-fit px-1">20</span>
+                <span class="font-bold text-white bg-red-500 rounded-xl h-fit w-fit px-1">01</span>
             </div>
 
             {{-- contents --}}
@@ -145,7 +145,8 @@
                                         <span>{{ $announcement->title }}</span></h1>
                                     <div class="h-full flex flex-col bg-white py-2">
                                         <h1 class="text-sm md:text-md font-semibold px-2 tracking-wider"><span>Event
-                                                Detail's</span></h1>
+                                                Detail's</span> - <span
+                                                class="text-red-500">{{  $announcement->type }}</span></h1>
                                         <p class="p-2">
                                             {{ $announcement->details }}
                                         </p>
@@ -169,8 +170,7 @@
                                             Now</a>
                                         @endif
                                         
-                                        <span
-                                            class="bg-red-500 text-[10px] text-white px-2 capitalize">{{  $announcement->type }}</span>
+                                        
                                     </div>
 
                                 </div>

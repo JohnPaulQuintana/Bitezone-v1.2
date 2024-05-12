@@ -77,7 +77,7 @@
         <div class="logo">
             <a href="#" class="flex items-center gap-2">
                 <img class="w-12 h-12" src="{{ asset('images/logo2.png') }}" alt="" srcset="">
-                <em>BITEZONE</em>
+                <em class="text-[30px]">BITEZONE</em>
             </a>
         </div>
         <a class="menu-link hover:cursor-pointer"><i class="fa fa-bars"></i></a>
@@ -91,7 +91,7 @@
 
                     </ul> --}}
                 </li>
-                <li><a class="border" href="{{ route('register') }}">Register Now</a></li>
+                <li><a class="" href="{{ route('register') }}">Register Now</a></li>
             </ul>
         </nav>
     </header>
@@ -109,7 +109,7 @@
                 <h6 class="mt-3">for the</h6>
                 <h2 class="mt-0"><em>Anti-Rabies Program</em> </h2>
                 <div class="main-button">
-                    <div class="scroll-to-section"><a href="{{ route('guest') }}" class="b-r hover:cursor-pointer">Login as Guest</a></div>
+                    <div class="scroll-to-section"><a href="{{ route('guest') }}" class="b-r hover:cursor-pointer">Guest Access</a></div>
                 </div>
             </div>
         </div>

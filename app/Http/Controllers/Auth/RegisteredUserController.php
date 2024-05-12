@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Rules\MinimumAge;
+use App\Rules\StrongPassword;
+use App\Rules\ValidContactNumber;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -31,14 +35,14 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'firstname' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'string', 'max:255'],
+            'firstname' => ['required', 'string','regex:/^[a-zA-Z\s]+$/u', 'min:6','max:100'],// Accepts only letters and spaces
+            'lastname' => ['required', 'string','regex:/^[a-zA-Z\s]+$/u', 'min:6','max:100'],
             'gender' => ['required', 'string', 'max:255'],
-            'dateofbirth' => ['required'],
-            'contact_no' => ['required'],
+            'dateofbirth' => ['required', new MinimumAge],
+            'contact_no' => ['required', 'string', new ValidContactNumber],
             'address' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::defaults(), new StrongPassword],
         ]);
 
         $role = 0;
