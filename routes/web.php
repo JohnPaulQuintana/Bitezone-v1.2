@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/reset', [ProfileController::class, 'reset'])->name('profile.reset');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::group(['prefix' => 'admin','middleware' => 'is_admin','as' => 'admin.'], function () {
         Route::get('dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');

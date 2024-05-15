@@ -16,6 +16,7 @@ use App\Models\PreExposure;
 use App\Models\ScheduleOfVaccination;
 use App\Models\SiteOfBite;
 use App\Models\Treatment;
+use App\Notifications\NotifyClinic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
@@ -454,4 +455,6 @@ class AdminController extends Controller
             'type'=>'follow-up',
         ]);
     }
+
+    
 }

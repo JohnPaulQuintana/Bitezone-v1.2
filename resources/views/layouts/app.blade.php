@@ -243,7 +243,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
                                     <div class="flex gap-1 items-center">
                                         <img src="${assetUrl}/${e.profile}" alt="" class="w-6 rounded-xl">
                                         <span class="text-sm">${e.name}</span>
-                                        <span class="text-sm bg-red-500 text-white h-fit rounded-md px-1">Follow-up</span>
+                                        <span class="text-sm bg-red-500 text-white h-fit rounded-md px-1">${e.type}</span>
                                     </div>
                                     <p class="text-sm -mt-2 break-words">
                                         ${e.details}

@@ -10,6 +10,8 @@ use App\Models\Location;
 use App\Models\Notification;
 use App\Models\Treatment;
 use App\Models\User;
+use App\Notifications\NotifyClinic;
+use Illuminate\Support\Facades\Notification as NotificationFacade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -77,6 +79,15 @@ class UserController extends Controller
 
         if($validated){
             Consultation::create(['user_id'=>Auth::user()->id, 'clinic_id' => $request->user_id ,'consultation'=>$validated['message']]);
+            //notif
+            $this->setupNotif($request->user_id, 'has sent a new appointment for the vaccination.', 'consultation');
+            //email
+            $details = [
+                'subject' => "Notification: New user is sending an appoinment!.",
+                'actionurl' => route('admin.appointment'),
+                'line-1' => 'Thank you for your patience and understanding.',
+            ];
+            $this->sendEmailNotificationToClinic($request->user_id,$details);
             return response()->json(['status' => 'success','message' => 'Consultation successfully sent!'], 201);
         }
        
@@ -126,12 +137,7 @@ class UserController extends Controller
         if($follow){
             $reciever_id = Consultation::where('id',$request->consultation_id)->first();
             
-            Notification::create([
-                'user_id'=>$reciever_id->clinic_id, 'profile'=>auth()->user()->profile, 
-                'name'=>auth()->user()->firstname.' '.auth()->user()->lastname,
-                'details'=>'has sent a follow-up appointment for the vaccination.',
-                'type'=>'follow-up',
-            ]);
+            $this->setupNotif($reciever_id->clinic_id, 'has sent a follow-up appointment for the vaccination.', 'follow-up');
         }
         return Redirect::route('user.record')->with(['title'=>'Follow-up Sent!','message'=>"Follow-up vaccine schedule is sent!.",'icon'=>"success"]);
     }
@@ -142,5 +148,21 @@ class UserController extends Controller
         $followups = Consultation::with('followup','user.treatment')->where('id',$request->id)->get();
         // dd($followups);
         return view('user.followup.followup', compact('followups'));
+    }
+
+    // setup notification
+    private function setupNotif($id, $desc, $type){
+        Notification::create([
+            'user_id'=>$id, 'profile'=>auth()->user()->profile, 
+            'name'=>auth()->user()->firstname.' '.auth()->user()->lastname,
+            'details'=>$desc,
+            'type'=>$type,
+        ]);
+    }
+
+    //send email notification
+    private function sendEmailNotificationToClinic($notifyId, $details){
+        $notifyPhysician = User::where('id', $notifyId)->first();
+        NotificationFacade::send($notifyPhysician, new NotifyClinic($details));
     }
 }
