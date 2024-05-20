@@ -7,11 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NotifyClinic extends Notification
+class NotifyUser extends Notification
 {
     use Queueable;
     private $details;
-
     /**
      * Create a new notification instance.
      *
@@ -47,7 +46,7 @@ class NotifyClinic extends Notification
                     ->line($this->details['line-2'])
                     ->line($this->details['line-3'])
                     ->line($this->details['line-4'])
-                    ->action('Open Consultation', $this->details['actionurl'])
+                    ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
     }
 

@@ -16,8 +16,11 @@ use App\Models\PreExposure;
 use App\Models\ScheduleOfVaccination;
 use App\Models\SiteOfBite;
 use App\Models\Treatment;
+use App\Models\User;
 use App\Notifications\NotifyClinic;
+use App\Notifications\NotifyUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification as NotificationFacade;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
 
@@ -210,6 +213,17 @@ class AdminController extends Controller
 
                     if($scheduleOfVac){
                         $updateStatus = Consultation::find($request->consultation_id)->update(["status"=>true]);
+                        $this->setupNotif($request->patient_id, 'Has added a new vaccine on your records!', "Appointment");
+                        //email
+                        $details = [
+                            'subject' => "Notification: ".auth()->user()->firstname." is recorded your appoinment!.",
+                            'actionurl' => route('user.index'),
+                            'line-1' => 'Your Appointment has been recorded to our system',
+                            'line-2' => 'Sender:'.auth()->user()->firstname.' '.auth()->user()->lastname,
+                            'line-3' => 'Contact Number:'.auth()->user()->contact_no,
+                            'line-4' => 'Date and Time:'.now(),
+                        ];
+                        $this->sendEmailNotificationToUser($request->patient_id, $details);
                     }
                 }
             }
@@ -355,7 +369,7 @@ class AdminController extends Controller
         if($scheduleOfVac){
             FollowUpVaccine::find($request->follow_id)->update(['status'=>1]);
             $reciever_id = Treatment::where('id',$request->treatment_id)->first();
-            $this->setupNotif($reciever_id->user_id);
+            $this->setupNotif($reciever_id->user_id, 'Has added a new vaccine on your records!', "Vaccine");
             
         }
 
@@ -397,7 +411,7 @@ class AdminController extends Controller
             'type'=>$validated['type'],
             'url'=>$request->url ?? null,
         ]);
-
+        $this->setupNotifToAll();
         return Redirect::route('admin.announcement')->with(['title'=>'Announcement Posted!','message'=>"You successfully created an announcement!.",'icon'=>'success']);
     }
 
@@ -447,14 +461,32 @@ class AdminController extends Controller
     }
 
     // setup notification
-    private function setupNotif($id){
+    private function setupNotif($id, $details, $type){
         Notification::create([
             'user_id'=>$id, 'profile'=>auth()->user()->profile, 
             'name'=>auth()->user()->firstname.' '.auth()->user()->lastname,
-            'details'=>'has added a new follow-up record for your vaccination appoinment.',
-            'type'=>'follow-up',
+            'details'=>$details,
+            'type'=>$type,
         ]);
     }
+    // setup notification for all announcement
+    private function setupNotifToAll(){
+        $senderId = auth()->id();
+        $users = User::where('id', '!=', $senderId)->get();
+        foreach ($users as $key => $value) {
+            Notification::create([
+                'user_id'=>$value->id, 'profile'=>$value->profile, 
+                'name'=>$value->firstname.' '.$value->lastname,
+                'details'=>"Has posted an announcement, its available on announcement section page.",
+                'type'=>'annoucement',
+            ]);
+        }
+        
+    }
 
-    
+     //send email notification
+    private function sendEmailNotificationToUser($notifyId, $details){
+        $notifyPhysician = User::where('id', $notifyId)->first();
+        NotificationFacade::send($notifyPhysician, new NotifyUser($details));
+    }
 }

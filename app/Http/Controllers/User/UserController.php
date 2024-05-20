@@ -78,14 +78,17 @@ class UserController extends Controller
         ]);
 
         if($validated){
-            Consultation::create(['user_id'=>Auth::user()->id, 'clinic_id' => $request->user_id ,'consultation'=>$validated['message']]);
+           $consultation =  Consultation::create(['user_id'=>Auth::user()->id, 'clinic_id' => $request->user_id ,'consultation'=>$validated['message']]);
             //notif
             $this->setupNotif($request->user_id, 'has sent a new appointment for the vaccination.', 'consultation');
             //email
             $details = [
-                'subject' => "Notification: New user is sending an appoinment!.",
+                'subject' => "Notification: ".auth()->user()->firstname." is sending an appoinment!.",
                 'actionurl' => route('admin.appointment'),
-                'line-1' => 'Thank you for your patience and understanding.',
+                'line-1' => 'New Appointment has been sent to you.',
+                'line-2' => 'Sender: '.auth()->user()->firstname.' '.auth()->user()->lastname,
+                'line-3' => 'Contact Number: '.auth()->user()->contact_no,
+                'line-4' => 'Date and Time: '.$consultation->created_at,
             ];
             $this->sendEmailNotificationToClinic($request->user_id,$details);
             return response()->json(['status' => 'success','message' => 'Consultation successfully sent!'], 201);
@@ -138,6 +141,17 @@ class UserController extends Controller
             $reciever_id = Consultation::where('id',$request->consultation_id)->first();
             
             $this->setupNotif($reciever_id->clinic_id, 'has sent a follow-up appointment for the vaccination.', 'follow-up');
+            //email
+            $details = [
+                'subject' => "Notification: ".auth()->user()->firstname." is sending an follow-up appoinment!.",
+                'actionurl' => route('admin.appointment'),
+                'line-1' => 'New Appointment has been sent to you.',
+                'line-2' => 'Sender: '.auth()->user()->firstname.' '.auth()->user()->lastname,
+                'line-3' => 'Contact Number: '.auth()->user()->contact_no,
+                'line-4' => 'Date and Time: '.now(),
+            ];
+            $this->sendEmailNotificationToClinic($reciever_id->clinic_id,$details);
+
         }
         return Redirect::route('user.record')->with(['title'=>'Follow-up Sent!','message'=>"Follow-up vaccine schedule is sent!.",'icon'=>"success"]);
     }
