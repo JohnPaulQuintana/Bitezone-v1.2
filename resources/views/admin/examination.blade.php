@@ -30,10 +30,10 @@
                                 <h1>animal Bite treatment consultation form</h1>
                             </div>
                             <div class="">
-                                
-                                <form action="{{ route('admin.treatment') }}" method="post">
+                                @include('admin.stepper.examination')
+                                {{-- <form action="{{ route('admin.treatment') }}" method="post">
                                     @csrf
-                                    {{-- basic information --}}
+                                    basic information
                                     <div class="grid grid-cols-1 bg-slate-100 p-1 md:grid-cols-3 lg:grid-cols-3 gap-2 mb-4">
                                         <div class="col-span-3 text-center uppercase font-bold text-white bg-red-500">
                                             <h1>basic information</h1>
@@ -103,7 +103,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- CHIEF COMPLAIN'S --}}
+                                    CHIEF COMPLAIN'S
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-3 lg:grid-cols-3 gap-2 mb-4">
 
                                         <div class="col-span-3 flex flex-col">
@@ -114,7 +114,7 @@
                                         </div>
 
                                     </div>
-                                    {{-- VITAL SIGN'S --}}
+                                    VITAL SIGN'S
                                     <div class="grid grid-cols-2 bg-slate-100  p-1 md:grid-cols-5 lg:grid-cols-5 gap-2 mb-4">
                                         <div class="col-span-5 text-center uppercase font-bold text-white bg-red-500">
                                             <h1>vital sign's</h1>
@@ -141,7 +141,7 @@
                                         </div>
 
                                     </div>
-                                    {{-- DOCTOR'S ORDER --}}
+                                    DOCTOR'S ORDER
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
                                         <div class="col-span-2 text-center uppercase font-bold text-white bg-red-500">
                                             <h1>doctor's order</h1>
@@ -274,7 +274,7 @@
                                             <label for="physician">Physician</label>
                                         </div>
                                     </div>
-                                    {{-- HISTORY OF EXPOSURE --}}
+                                    HISTORY OF EXPOSURE
                                     <div class="grid grid-cols-1 bg-slate-100  p-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
                                         <div class="col-span-2 text-center uppercase font-bold text-white bg-red-500 p-2">
                                             <h1>history of exposure</h1>
@@ -480,7 +480,7 @@
                                             <button type="submit" class="bg-red-500 hover:bg-red-700 rounded-md hover:cursor-pointer w-full p-2 text-white">Save Record's</button>
                                         </div>
                                     </div>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                     </div>
