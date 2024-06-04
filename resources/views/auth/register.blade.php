@@ -79,7 +79,7 @@
                 </div>
                 <div>
                     <label for="address" class="block mb-2 text-sm font-medium text-white dark:text-white">Address</label>
-                    <input type="address" name="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Address" />
+                    <input type="address" name="address" value="{{ old("address") }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Address" />
                     <div x-data="{ showError: true }" x-init="setTimeout(() => { showError = false }, 5000)" x-show="showError">
                         @error('address')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -92,13 +92,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <div>
                     <label for="password" class="block mb-2 text-sm font-medium text-white dark:text-white">Password</label>
-                    <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                    <input type="password" name="password" value="{{ old('password') }}" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                     {{-- <x-input-error :messages="$errors->get('password')" class="mt-2" /> --}}
                     
                 </div>
                 <div>
                     <label for="password_confirmation" class="block mb-2 text-sm font-medium text-white dark:text-white">Confirm password</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                    <input type="password" value="{{ old('password') }}" name="password_confirmation" id="password_confirmation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 </div>
             </div>

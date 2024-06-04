@@ -291,6 +291,7 @@
 
                         // Unbind any existing click event handlers before binding a new one
                         $(document).off('click', '#locationBtn').on('click', '#locationBtn', function() {
+                            // alert('yes')
                             let userId = $('#user_id').val();
                             let message = $('#message').val();
                             let requestData = {user_id:userId,message:message}
@@ -303,6 +304,7 @@
                                 })
                                 .catch(function(error) {
                                     // Handle error
+                                    $('#consultationContainer').addClass('hidden')
                                     Swal.fire({
                                         icon: 'error',
                                         title: "We encounter an error!",
@@ -332,6 +334,10 @@
                                     });
 
                                     console.log(error)
+                                    setTimeout(() => {
+                                        $('#consultationContainer').removeClass('hidden')
+                                        Swal.close();
+                                    }, 3000);
                                 });
                         })
 
@@ -350,6 +356,10 @@
                                     data: data,
                                     headers: {
                                         'X-CSRF-TOKEN': csrfToken // Include CSRF token in the request headers
+                                    },
+                                    beforeSend: function(){
+                                        console.log('waiting...')
+                                        sweetAlertWaiting('info','Processing your request.')
                                     },
                                     success: function(response) {
                                         resolve(response);
@@ -385,7 +395,36 @@
                             }).then((result) => {
                                 if (result.dismiss === Swal.DismissReason.timer) {
                                     console.log("I was closed by the timer");
-                                    window.location.reload();
+                                    window.location.href = '/user/record'
+                                }
+                            });
+                        }
+
+                        //sending popup
+                        function sweetAlertWaiting(status, message) {
+                            let timerInterval;
+                            Swal.fire({
+                                title: "Processing...",
+                                html: `<span>${message}</span><span class="block"><b></b></span>`,
+                                text: message,
+                                icon: status,
+                                timer: 10000,
+                                timerProgressBar: true,
+                                didOpen: () => {
+                                    $('#consultationContainer').addClass('hidden')
+                                    Swal.showLoading();
+                                    const timer = Swal.getPopup().querySelector("b");
+                                    timerInterval = setInterval(() => {
+                                        timer.textContent = `${Swal.getTimerLeft()}`;
+                                    }, 100);
+                                },
+                                willClose: () => {
+                                    clearInterval(timerInterval);
+                                }
+                            }).then((result) => {
+                                if (result.dismiss === Swal.DismissReason.timer) {
+                                    console.log("I was closed by the timer");
+                                    window.location.href = '/user/record'
                                 }
                             });
                         }
