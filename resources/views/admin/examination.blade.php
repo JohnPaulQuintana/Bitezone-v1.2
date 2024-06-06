@@ -485,7 +485,7 @@
                         </div>
                     </div>
 
-                    @include('admin.popup.error')
+                    {{-- @include('admin.popup.error') --}}
                     @if (empty($location))
                         <div id="locationSetupPopup">
                             @include('user.popup.location-setup')
