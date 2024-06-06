@@ -89,6 +89,24 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
 
             <!-- ===== Main Content Start ===== -->
             <main>
+                <!-- Check if the current route is not 'profile.update' -->
+                @if (Auth::user()->profile === null)
+                        @if (url()->current() !== url('/profile'))
+                        <div id="profileModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-99999">
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full modal">
+                                <div class="p-4 text-center">
+                                    
+                                    <p class="mb-4">
+                                        <i class="fa-solid fa-circle-xmark text-7xl text-red-500"></i>
+                                        <h2 class="text-xl font-bold mb-4">Update your profile now!.</h2>
+                                    </p>
+                                    <a href="{{ route('profile.update') }}" id="profileCloseModal" class="bg-red-500 text-white font-bold py-2 px-4 rounded">Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endif
+                
                 {{ $slot }}
             </main>
             <!-- ===== Main Content End ===== -->

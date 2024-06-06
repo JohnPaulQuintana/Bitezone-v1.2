@@ -35,8 +35,8 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'firstname' => ['required', 'string','regex:/^[a-zA-Z\s]+$/u', 'min:6','max:100'],// Accepts only letters and spaces
-            'lastname' => ['required', 'string','regex:/^[a-zA-Z\s]+$/u', 'min:6','max:100'],
+            'firstname' => ['required', 'string','regex:/^[a-zA-Z\s]+$/u', 'min:2','max:100'],// Accepts only letters and spaces
+            'lastname' => ['required', 'string','regex:/^[a-zA-Z\s]+$/u', 'min:2','max:100'],
             'gender' => ['required', 'string', 'max:255'],
             'dateofbirth' => ['required', new MinimumAge],
             'contact_no' => ['required', 'string', new ValidContactNumber],

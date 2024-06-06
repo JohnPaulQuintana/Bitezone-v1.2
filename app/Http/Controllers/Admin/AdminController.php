@@ -19,7 +19,10 @@ use App\Models\Treatment;
 use App\Models\User;
 use App\Notifications\NotifyClinic;
 use App\Notifications\NotifyUser;
+use App\Notifications\Walkin;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification as NotificationFacade;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
@@ -229,6 +232,174 @@ class AdminController extends Controller
             }
         }
         return Redirect::route('admin.appointment')->with(['status'=>'success']);
+    }
+
+    //walkin
+    public function walkin(){
+        return view('admin.walkin.walkin');
+    }
+
+    //treatment walkin
+    public function treatmentWalkin(Request $request){
+        // dd($request);
+         //for now lets required the body_parts
+         $validated = $request->validate([
+            'firstname'=>'required',
+            'lastname'=>'required',
+            'dateofbirth'=>'required',
+            'contact_no'=>'required',
+            'address'=>'required',
+            'email'=>'required|email',
+            'body_parts'=>'required', 
+            'type' => 'required',
+            'sday' => 'required',
+            'sdate' => 'required',
+            'stime' => 'required',
+            'rl' => 'required',
+            'site' => 'required',
+            'date_of_incidence' => 'required',
+            'place_of_incidence' => 'required',
+            'type_of_bite' => 'required',
+            'site_of_bite' => 'required',
+            'animal' => 'required',
+        ]);
+
+       
+
+        $user = User::create([
+            'firstname'=>$request->firstname,
+            'lastname'=>$request->lastname,
+            'middlename'=>$request->middlename,
+            'gender'=>$request->gender,
+            'dateofbirth'=>$request->dateofbirth,
+            'contact_no'=>$request->contact_no,
+            'address'=>$request->address,
+            // 'email'=>$request->email,
+            'email'=>'jpquintana2024@gmail.com',
+            'password'=>Hash::make('*Walkin2024'),//default password for walkin
+            'isAdmin'=>0,
+            
+        ]);
+
+        if($user){
+            $consultation = Consultation::create([
+                'user_id'=> $user->id,
+                'clinic_id' => auth()->user()->id,
+                'consultation'=>"Walked in consultation for vaccine.",
+                'status'=>0,
+            ]);
+             // Calculate age from date of birth
+            $dateOfBirth = Carbon::parse($request->dateofbirth);
+            $age = $dateOfBirth->age;
+
+            // for now by passed the validation
+            $treatment =  Treatment::create([
+                'user_id' => $user->id,
+                'clinic_id' => auth()->user()->id,
+                'consultation_id' => $consultation->id,
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'middlename' => $request->middlename,
+                'age' => $age,
+                'gender' => $request->gender,
+                'date' => $request->dateofbirth,
+                'time' => $request->time,
+                'record_number' => $request->record_number ?? "xxx-xxx-2024",
+                'address' => $request->address,
+                'place_of_birth' => $request->place_of_birth,
+                'contact_number' => $request->contact_no,
+                'chief_complain' => $request->complain,
+                'bp' => $request->bp,
+                'pr' => $request->pr,
+                'rr' => $request->rr,
+                'temp' => $request->temperature,
+                'wt' => $request->wt,
+                'history_of_illness' => $request->history_of_present_illness,
+                'pertinent_pe' => $request->pertinent_pe,
+                'diagnosis' => $request->diagnosis,
+                'home_medicine' => $request->home_medicine,
+            ]);
+
+            if($treatment){
+                $siteofbite = SiteOfBite::create(['treatment_id'=>$treatment->id,'site_of_bite'=>json_encode($request->body_parts)]);
+    
+                if($siteofbite){
+                    $exposure = Exposure::create([
+                        'treatment_id'=>$treatment->id,
+                        'date_of_incidence'=>$request->date_of_incidence,
+                        'place_of_incidence'=>$request->place_of_incidence,
+                        'animal_type'=>$request->animal,
+                        'animal_status'=>$request->status_of_animal,
+                        'type_of_bite'=>$request->type_of_bite,
+                        'washing_of_bite'=>$request->washing_of_bite,
+                        'site_of_bite'=>$request->site_of_bite,
+                        'previous_vaccination'=>$request->previous_vaccination_year,
+                        'status'=>$request->previous_vaccination_status,
+                        'tissue_culture_vaccine'=>$request->tissue_culture_vaccine,
+                        'rabies_immunoglobulin'=>$request->rabies_immunoglobulin,
+                        'erig'=>$request->erig,
+                        'dose'=>$request->dose,
+                        'anti_titanus'=>$request->anti_tetanus,
+                    ]);
+    
+                    if($exposure){
+                        switch ($request->type) {
+                            case 'BOOSTER DOSE':
+                               $scheduleOfVac = Booster::create([
+                                    "treatment_id" =>$treatment->id,
+                                    "booster_dose" =>$request->type,
+                                ]);
+                                break;
+                            case 'POST EXPOSURE':
+                               $scheduleOfVac = PostExposure::create([
+                                    "treatment_id" =>$treatment->id,
+                                    "day" =>$request->sday,
+                                    "date" =>$request->sdate,
+                                    "time" =>$request->stime,
+                                    "site" =>$request->site,
+                                    "rl" =>$request->rl,
+                                    "nod" =>$request->nod,
+                                ]);
+                                break;
+                            case 'PRE EXPOSURE':
+                               $scheduleOfVac = PreExposure::create([
+                                    "treatment_id" =>$treatment->id,
+                                    "day" =>$request->sday,
+                                    "date" =>$request->sdate,
+                                    "time" =>$request->stime,
+                                    "site" =>$request->site,
+                                    "rl" =>$request->rl,
+                                    "nod" =>$request->nod,
+                                ]);
+                                break;
+                            
+                            default:
+                                # code...
+                                break;
+                        }
+                        
+    
+                        if($scheduleOfVac){
+                            $updateStatus = Consultation::find($consultation->id)->update(["status"=>true]);
+                            $this->setupNotif($user->id, 'Has added a new vaccine on your records!', "Walk-in");
+                            //email
+                            $details = [
+                                'subject' => "Notification: ".auth()->user()->firstname." is recorded your appoinment!.",
+                                'actionurl' => route('user.index'),
+                                'line-1' => 'Your Appointment has been recorded to our system',
+                                'line-2' => 'Sender:'.auth()->user()->firstname.' '.auth()->user()->lastname,
+                                'line-3' => 'Contact Number:'.auth()->user()->contact_no,
+                                'line-4' => 'Date and Time:'.now(),
+                                'line-5' => 'Bitezone Credentials: Email : '.$user->email.' Password : *Walkin2024',
+                                'line-6' => 'NOTE : Please update your email or password account for security.',
+                            ];
+                            $this->sendEmailNotificationToUserWalkin($user->id, $details);
+                        }
+                    }
+                }
+            }
+            return Redirect::route('admin.appointment')->with(['status'=>'success']);
+        }
     }
 
     // treatment edit
@@ -469,6 +640,7 @@ class AdminController extends Controller
             'type'=>$type,
         ]);
     }
+   
     // setup notification for all announcement
     private function setupNotifToAll(){
         $senderId = auth()->id();
@@ -488,5 +660,10 @@ class AdminController extends Controller
     private function sendEmailNotificationToUser($notifyId, $details){
         $notifyPhysician = User::where('id', $notifyId)->first();
         NotificationFacade::send($notifyPhysician, new NotifyUser($details));
+    }
+     //send email notification for walkin
+    private function sendEmailNotificationToUserWalkin($notifyId, $details){
+        $notifyPhysician = User::where('id', $notifyId)->first();
+        NotificationFacade::send($notifyPhysician, new Walkin($details));
     }
 }

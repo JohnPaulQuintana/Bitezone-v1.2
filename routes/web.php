@@ -39,8 +39,10 @@ Route::group(['middleware' => ['auth','verified']], function () {
         Route::get('followup', [\App\Http\Controllers\Admin\AdminController::class, 'followup'])->name('followup');
         Route::get('patient', [\App\Http\Controllers\Admin\AdminController::class, 'patient'])->name('patient');
         Route::get('examination/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'examination'])->name('examination');
+        Route::get('walkin', [\App\Http\Controllers\Admin\AdminController::class, 'walkin'])->name('walkin');
         Route::post('clinic-setup', [\App\Http\Controllers\Admin\AdminController::class, 'setup'])->name('setup');
         Route::post('treatment', [\App\Http\Controllers\Admin\AdminController::class, 'treatment'])->name('treatment');
+        Route::post('treatment-walkin', [\App\Http\Controllers\Admin\AdminController::class, 'treatmentWalkin'])->name('treatment.walkin');
         Route::get('edit/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'treatmentEdit'])->name('treatment.edit');
         Route::post('update', [\App\Http\Controllers\Admin\AdminController::class, 'treatmentUpdate'])->name('treatment.update');
         Route::get('vaccination/{id}', [\App\Http\Controllers\Admin\AdminController::class, 'vaccination'])->name('vaccination');

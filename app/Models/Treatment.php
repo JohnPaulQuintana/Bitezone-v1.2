@@ -43,6 +43,7 @@ class Treatment extends Model
         "pertinent_pe",
         "diagnosis",
         "home_medicine",
+        "consultation_type",
     ];
 
     public function user() :BelongsTo{

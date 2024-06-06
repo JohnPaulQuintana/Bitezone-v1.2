@@ -21,7 +21,10 @@
                     {{-- record table here --}}
                     
                     <div class="overflow-x-auto shadow-md sm:rounded-lg px-2">
-                        <div class="flex items-center justify-end flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
+                        <div class="flex items-center gap-2 justify-end flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
+                            <div class="border p-1 rounded-md hover:bg-red-500 hover:text-white">
+                                <a href="{{ route('admin.walkin') }}">walk-in</a>
+                            </div>
                             <div>
                                 <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
                                     <span class="sr-only">Action button</span>
@@ -133,6 +136,22 @@
                         {{ $appointments->links() }}
                     </div>
 
+                    
+                    @if (session('status'))
+                        <div id="statusModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-99999">
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full modal">
+                                <div class="p-4 text-center">
+                                    
+                                    <p class="mb-4">
+                                        <i class="fa-solid fa-circle-check text-7xl text-green-500"></i>
+                                        <h2 class="text-xl font-bold mb-4">Appointment Recorded Successfully</h2>
+                                    </p>
+                                    <button id="statusCloseModal" class="bg-red-500 text-white font-bold py-2 px-4 rounded">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     @if (empty($location))
                         <div id="locationSetupPopup">
                             @include('admin.popup.clinic-setup')
@@ -146,7 +165,9 @@
     @section('scripts')
         <script>
             $(document).ready(function() {
-
+                $('#statusCloseModal').click(function(){
+                    $('#statusModal').addClass('hidden')
+                })
                 $('.filter').click(function(){
                     // alert($(this).data('name'))
                     filterTable($(this).data('name'))
