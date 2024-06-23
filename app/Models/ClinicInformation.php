@@ -11,7 +11,7 @@ class ClinicInformation extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['location_id', 'profile', 'name', 'open','closed','days_of_week'];
+    protected $fillable = ['location_id', 'profile','certificate', 'name', 'open','closed','days_of_week'];
 
     public function location() :BelongsTo{
         return $this->belongsTo(Location::class);

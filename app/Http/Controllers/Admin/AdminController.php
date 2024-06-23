@@ -51,9 +51,10 @@ class AdminController extends Controller
         
 
         // Check if a new profile picture has been uploaded
-        if ($request->hasFile('profile')) {
+        if ($request->hasFile('profile') && $request->hasFile('certificate')) {
             // Store the uploaded file and update the user's profile picture
             $path = $request->file('profile')->store('clinics', 'public');
+            $cert = $request->file('certificate')->store('clinics', 'public');
 
             // If the user already has a profile picture, delete the old one
             // if ($user->profile) {
@@ -65,6 +66,7 @@ class AdminController extends Controller
             ClinicInformation::create([
                 'location_id'=>$location->id,
                 'profile'=>$path,
+                'certificate'=>$cert,
                 'name'=>$validateInfo['name'],
                 'open'=>$validateInfo['open'],
                 'closed'=>$validateInfo['closed'],
