@@ -36,7 +36,7 @@
     
     @if (empty($location) && auth()->user()->isAdmin !== 2)
         @include('admin.popup.clinic-setup')
-    @elseif (auth()->user()->verified)
+    @elseif (auth()->user()->verified === 0)
         @include('admin.popup.verification')
     @endif
     
