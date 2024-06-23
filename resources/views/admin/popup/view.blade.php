@@ -16,7 +16,7 @@
   
         <div class="p-4 sm:p-10 overflow-y-auto">
           <div class="mb-6 text-center">
-            <h3 class="mb-2 text-xl font-bold text-gray-800 dark:text-neutral-200">
+            <h3 class="mb-2 text-xl font-bold text-green-500 dark:text-neutral-200">
               Verified of Clinic
             </h3>
             <p class="text-gray-500 dark:text-neutral-500">
