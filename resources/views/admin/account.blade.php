@@ -103,6 +103,7 @@
     </div>
 
     @include('admin.popup.open')
+    @include('admin.popup.view')
     @section('scripts')
         <script>
             let accounts = @json($needToVerified);
@@ -136,6 +137,23 @@
                         }
                     });
                     $('#openModalbtn').trigger('click')
+                })
+
+                $('.viewBtn').click(function(){
+                    // alert($(this).data('id'))
+                    let id = $(this).data('id')
+                    let path = "{{ asset('storage') }}";
+                    accounts.forEach(a => {
+                        if(a.id == id){
+                            // console.log(a.location.clinic.profile)
+                            $('#user_id').val(id)
+                            $('#v_profile').attr('src',`${path}/${a.location.clinic.profile}`)
+                            $('#v_certificate').attr('src',`${path}/${a.location.clinic.certificate}`)
+                            $('#v_name').text(a.location.clinic.name)
+                            $('#v_address').text(a.location.address)
+                        }
+                    });
+                    $('#viewModalbtn').trigger('click')
                 })
 
                 $('.rejectBtn').click(function(){
