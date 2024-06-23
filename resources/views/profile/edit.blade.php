@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        @if (empty($location) && auth()->user()->isAdmin)          
+        @if (empty($location) && auth()->user()->isAdmin !== 0 && auth()->user()->isAdmin !== 2)          
                 @include('admin.popup.clinic-setup')
         @elseif (empty($location) && !auth()->user()->isAdmin)
         <div id="locationSetupPopup">
