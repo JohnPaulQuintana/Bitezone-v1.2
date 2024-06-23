@@ -25,6 +25,8 @@ Route::get('/notification',[HomeController::class, 'notif'])->name('notif');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -34,7 +36,7 @@ Route::middleware('auth')->group(function () {
 Route::group(['middleware' => ['auth','verified']], function () {
 
     Route::group(['prefix' => 'superadmin','as' => 'superadmin.'], function () {
-        Route::get('dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
+        Route::get('account', [\App\Http\Controllers\SuperAdmin\SuperAdminController::class, 'index'])->name('account');
     });
 
     Route::group(['prefix' => 'admin','middleware' => 'is_admin','as' => 'admin.'], function () {
