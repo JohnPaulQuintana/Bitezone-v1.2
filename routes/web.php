@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::group(['prefix' => 'superadmin','as' => 'superadmin.'], function () {
         Route::get('account', [\App\Http\Controllers\SuperAdmin\SuperAdminController::class, 'index'])->name('account');
         Route::post('activate', [\App\Http\Controllers\SuperAdmin\SuperAdminController::class, 'verified'])->name('activate');
+        Route::post('declined', [\App\Http\Controllers\SuperAdmin\SuperAdminController::class, 'declined'])->name('declined');
     });
 
     Route::group(['prefix' => 'admin','middleware' => 'is_admin','as' => 'admin.'], function () {

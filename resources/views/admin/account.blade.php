@@ -85,7 +85,7 @@
                                            
                                             @if ($v->verified !== 1)
                                                 <button type="button" data-id="{{ $v->id }}" class="verifiedBtn bg-blue-500 hover:bg-blue-700 p-1 text-white rounded-md"><i class="fa-solid fa-badge-check"></i> verify</button>
-                                                <button type="button" data-id="{{ $v->id }}" class="rejectBtn bg-red-500 hover:bg-red-700 p-1 text-white rounded-md"><i class="fa-solid fa-xmark-to-slot"></i> reject</button>
+                                                {{-- <button type="button" data-id="{{ $v->id }}" class="rejectBtn bg-red-500 hover:bg-red-700 p-1 text-white rounded-md"><i class="fa-solid fa-xmark-to-slot"></i> reject</button> --}}
 
                                             @else
                                             <button type="button" data-id="{{ $v->id }}" class="viewBtn bg-blue-500 hover:bg-blue-700 p-1 text-white rounded-md"><i class="fa-solid fa-badge-check"></i> view</button>
@@ -121,6 +121,12 @@
                         text: "Clinic is now verified and operational!",
                         icon: "success"
                     });
+                }else if(verifiedStatus === 'rejected'){
+                    Swal.fire({
+                        title: "Verification Rejected!",
+                        text: "Clinic is rejected and not operational!",
+                        icon: "error"
+                    });
                 }
                 $('.verifiedBtn').click(function(){
                     // alert($(this).data('id'))
@@ -129,7 +135,7 @@
                     accounts.forEach(a => {
                         if(a.id == id){
                             // console.log(a.location.clinic.profile)
-                            $('#user_id').val(id)
+                            $('.user_id').val(id)
                             $('#c_profile').attr('src',`${path}/${a.location.clinic.profile}`)
                             $('#c_certificate').attr('src',`${path}/${a.location.clinic.certificate}`)
                             $('#c_name').text(a.location.clinic.name)
@@ -146,7 +152,7 @@
                     accounts.forEach(a => {
                         if(a.id == id){
                             // console.log(a.location.clinic.profile)
-                            $('#user_id').val(id)
+                            // $('.user_id').val(id)
                             $('#v_profile').attr('src',`${path}/${a.location.clinic.profile}`)
                             $('#v_certificate').attr('src',`${path}/${a.location.clinic.certificate}`)
                             $('#v_name').text(a.location.clinic.name)

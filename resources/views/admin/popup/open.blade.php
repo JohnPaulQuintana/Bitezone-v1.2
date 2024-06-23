@@ -49,9 +49,16 @@
                 <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-800 dark:text-white dark:hover:bg-neutral-800" data-hs-overlay="#hs-verification">
                   Cancel
                 </button>
+                <form action="{{ route('superadmin.declined') }}" method="post">
+                    @csrf
+                    <input type="number" name="user_id" class="user_id hidden">
+                    <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">
+                        Declined    
+                    </button>
+                </form>
                 <form action="{{ route('superadmin.activate') }}" method="post">
                     @csrf
-                    <input type="number" id="user_id" name="user_id" class="hidden">
+                    <input type="number" name="user_id" class="user_id hidden">
                     <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                         Verified Clinic
                       </button>

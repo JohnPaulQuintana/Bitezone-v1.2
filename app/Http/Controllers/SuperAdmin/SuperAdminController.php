@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Location;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,6 +25,19 @@ class SuperAdminController extends Controller
             $user->update(['verified'=>1]);
             $this->setupNotif($user->id, 'Your clinic verification is now verified, have a nice day!.', 'verified');
             return Redirect::route('superadmin.account')->with(['verified.status'=>'success']);
+        }
+    }
+
+    public function declined(Request $request){
+        // dd($request);
+        // $user = User::find($request->user_id);
+        $location = Location::where('user_id',$request->user_id)->first();
+        // $clinic = Location::where('user_id',$request->user_id)->first();
+        // dd($location);
+        if($location){
+            $location->delete();
+            $this->setupNotif($request->user_id, 'Your clinic verification is rejected, re-process your clinic information!.', 'rejected');
+            return Redirect::route('superadmin.account')->with(['verified.status'=>'rejected']);
         }
     }
 
