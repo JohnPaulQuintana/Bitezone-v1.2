@@ -90,7 +90,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
             <!-- ===== Main Content Start ===== -->
             <main>
                 <!-- Check if the current route is not 'profile.update' -->
-                @if (Auth::user()->profile === null)
+                @if (Auth::user()->profile === null && auth()->user()->isAdmin !== 2)
                         @if (url()->current() !== url('/profile'))
                         <div id="profileModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-99999">
                             <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full modal">

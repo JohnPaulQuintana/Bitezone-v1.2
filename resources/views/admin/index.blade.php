@@ -33,7 +33,8 @@
         </div>
     </div>
     {{-- {{ $location->clinic }}  --}}
-    @if (empty($location))
+    
+    @if (empty($location) && auth()->user()->isAdmin !== 2)
         @include('admin.popup.clinic-setup')
 
     @endif

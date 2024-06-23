@@ -33,6 +33,10 @@ Route::middleware('auth')->group(function () {
 
 Route::group(['middleware' => ['auth','verified']], function () {
 
+    Route::group(['prefix' => 'superadmin','as' => 'superadmin.'], function () {
+        Route::get('dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
+    });
+
     Route::group(['prefix' => 'admin','middleware' => 'is_admin','as' => 'admin.'], function () {
         Route::get('dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
         Route::get('appointment', [\App\Http\Controllers\Admin\AdminController::class, 'appointment'])->name('appointment');
