@@ -82,10 +82,10 @@
 
                                         </td>
                                         <td class="py-4 text-sm flex gap-1">
-                                            <button type="button" data-id="{{ $v->id }}" class="verifiedBtn bg-blue-500 hover:bg-blue-700 p-1 text-white rounded-md"><i class="fa-solid fa-badge-check"></i> verify</button>
-                                                <button type="button" data-id="{{ $v->id }}" class="rejectBtn bg-red-500 hover:bg-red-700 p-1 text-white rounded-md"><i class="fa-solid fa-xmark-to-slot"></i> reject</button>
+                                           
                                             @if (auth()->user()->verified == 0)
-                                                
+                                                <button type="button" data-id="{{ $v->id }}" class="verifiedBtn bg-blue-500 hover:bg-blue-700 p-1 text-white rounded-md"><i class="fa-solid fa-badge-check"></i> verify</button>
+                                                <button type="button" data-id="{{ $v->id }}" class="rejectBtn bg-red-500 hover:bg-red-700 p-1 text-white rounded-md"><i class="fa-solid fa-xmark-to-slot"></i> reject</button>
                                             @endif
                                             
                                         </td>
