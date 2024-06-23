@@ -34,7 +34,7 @@
                 </div>
                 <div class="mb-3">
                     <x-input-label for="middlename" :value="__('Middle Name')" />
-                    <x-text-input name="middlename" type="text" class="mt-1 block w-full" :value="old('middlename', $user->middlename)" required autofocus autocomplete="middlename" />
+                    <x-text-input name="middlename" type="text" class="mt-1 block w-full" :value="old('middlename', $user->middlename)" autofocus autocomplete="middlename" />
                     <x-input-error class="mt-2" :messages="$errors->get('middlename')" />
                 </div>
                 <div class="mb-3">
