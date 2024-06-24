@@ -269,8 +269,8 @@
                                 <div class="flex flex-col">
                                     <label for="gender">Gender</label>
                                     <select name="gender" class="rounded-md p-2 ps-2 border-0 uppercase font-bold">
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <option value="male" @if(old('gender') === 'male') selected @endif>Male</option>
+                                        <option value="female" @if(old('gender') === 'female') selected @endif>Female</option>
                                     </select>
                                     @error('gender')
                                         <span class="text-red-500">Gender is required!</span>
