@@ -251,7 +251,7 @@
                         </div>
                         <div class="flex flex-col">
                             <label for="middlename">Middle Name</label>
-                            <input type="text" name="middlename" value="{{ old('middle') }}"
+                            <input type="text" name="middlename" value="{{ old('middlename') }}"
                                 class="rounded-md p-2 ps-2 border-0 uppercase font-bold">
                         </div>
                         <div class="flex flex-col">
