@@ -578,8 +578,8 @@
                                             Stray Dog</option>
                                         <option value="stray cat" @if (old('animal') == 'stray cat') selected @endif>
                                             Stray Cat</option>
-                                        <option value="others" @if (old('animal') == 'others') selected @endif>
-                                            Others</option>
+                                        {{-- <option value="others" @if (old('animal') == 'others') selected @endif>
+                                            Others</option> --}}
                                     </select>
                                     @error('animal')
                                         <p class="text-red-500">Animal type field is required.</p>
