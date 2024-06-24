@@ -417,7 +417,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="head"
-                                            @if (in_array('head',old('body_parts'))) checked @endif
+                                            @if (is_array(old('body_parts')) && in_array('head',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Head</label>
@@ -426,7 +426,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="neck"
-                                            @if (in_array('neck',old('body_parts'))) checked @endif
+                                            @if (is_array(old('body_parts')) && in_array('neck',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Neck</label>
@@ -435,7 +435,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="shoulder-left"
-                                            @if (in_array('shoulder-left',old('body_parts'))) checked @endif
+                                            @if (is_array(old('body_parts')) && in_array('shoulder-left',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Shoulder-Right</label>
@@ -444,7 +444,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="shoulder-right"
-                                            @if (in_array('shoulder-right',old('body_parts'))) checked @endif
+                                            @if (is_array(old('body_parts')) && in_array('shoulder-right',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Shoulder-Right</label>
@@ -453,7 +453,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="arm-left"
-                                            @if (in_array('arm-left',old('body_parts'))) checked @endif
+                                            @if (is_array(old('body_parts')) && in_array('arm-left',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Arm-Left</label>
@@ -462,7 +462,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="arm-right"
-                                            @if (in_array('arm-right',old('body_parts'))) checked @endif
+                                            @if (is_array(old('body_parts')) && in_array('arm-right',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Arm-Right</label>
@@ -471,7 +471,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="elbow-left"
-                                            @if (in_array('elbow-left',old('body_parts'))) checked @endif
+                                            @if (is_array(old('body_parts')) && in_array('elbow-left',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Elbow-Left</label>
@@ -480,7 +480,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="elbow-right"
-                                            @if (in_array('elbow-right',old('body_parts'))) checked @endif
+                                            @if (is_array(old('body_parts')) && in_array('elbow-right',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Elbow-Right</label>
@@ -489,7 +489,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="hand-left"
-                                            @if (in_array('hand-left',old('body_parts'))) checked @endif
+                                            @if (is_array(old('body_parts')) && in_array('hand-left',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Hand-Left</label>
@@ -498,7 +498,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="hand-right"
-                                            @if (in_array('hand-right',old('body_parts'))) checked @endif
+                                            @if (is_array(old('body_parts')) && in_array('hand-right',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Hand-right</label>
@@ -507,7 +507,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="chest"
-                                        @if (in_array('chest',old('body_parts'))) checked @endif
+                                        @if (is_array(old('body_parts')) && in_array('chest',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Chest</label>
@@ -516,7 +516,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="back"
-                                        @if (in_array('back',old('body_parts'))) checked @endif
+                                        @if (is_array(old('body_parts')) && in_array('back',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Back</label>
@@ -525,7 +525,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="abdomen"
-                                        @if (in_array('abdomen',old('body_parts'))) checked @endif
+                                        @if (is_array(old('body_parts')) && in_array('abdomen',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Abdomen</label>
@@ -534,7 +534,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="hips"
-                                        @if (in_array('hips',old('body_parts'))) checked @endif
+                                        @if (is_array(old('body_parts')) && in_array('hips',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Hips</label>
@@ -543,7 +543,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="leg-left"
-                                        @if (in_array('leg-left',old('body_parts'))) checked @endif
+                                        @if (is_array(old('body_parts')) && in_array('leg-left',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">leg-Left</label>
@@ -552,7 +552,7 @@
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                     <div class="flex items-center ps-3">
                                         <input name="body_parts[]" type="checkbox" value="leg-right"
-                                        @if (in_array('leg-right',old('body_parts'))) checked @endif
+                                        @if (is_array(old('body_parts')) && in_array('leg-right',old('body_parts'))) checked @endif
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label
                                             class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">leg-Right</label>
